@@ -51,7 +51,32 @@ One of the benefits of utilizing areas under the curve is that they remain the s
 ### Results
 Whislt AUC_weighted was considered as one of the best measurements the result of the execution of automl model indicated that AUC_micro provided the best run metric of them all. 
 
-![Arq](https://github.com/auravila/DataScience-Capstone/blob/master/Screenshots/1-automlrundetails)
+Parameters used for the automl run.
+
+automl_settings = {
+    "experiment_timeout_minutes": 60,
+    "max_concurrent_iterations": 5,
+    "primary_metric" : 'AUC_weighted'
+}
+automl_config = AutoMLConfig(compute_target=compute_target,
+                             task = "classification",
+                             training_data=dataset,
+                             label_column_name="class",   
+                             path = project_folder,
+                             enable_early_stopping= True,
+                             enable_onnx_compatible_models=True, ******
+                             featurization= 'auto',
+                             debug_log = "automl_errors.log",
+                             **automl_settings
+                            )
+
+Automl RunDetails
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/1-automlrundetails.png)
+
+Automl Metrics
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/1.1-automlmetrics.png)
+
+****** This feature was enabled later in order to convert and register the model as onnx
 
 ## Hyperparameter Tuning
 *TODO*: What kind of model did you choose for this experiment and why? Give an overview of the types of parameters and their ranges used for the hyperparameter search
