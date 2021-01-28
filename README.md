@@ -1,8 +1,7 @@
-*NOTE:* This file is a template that you can use to create the README for your project. The *TODO* comments below will highlight the information you should be sure to include.
 
-# Your Project Title Here
+# Diabetes Classification Project
 
-*TODO:* Write a short introduction to your project.
+The following project aims to identify the probablity of testing diabetes based on a finite set of measurements.
 
 ## Project Set Up and Installation
 *OPTIONAL:* If your project has any special installation steps, this is where you should put it. To turn this project into a professional portfolio project, you are encouraged to explain how to set up this project in AzureML.
@@ -10,7 +9,22 @@
 ## Dataset
 
 ### Overview
-*TODO*: Explain about the data you are using and where you got it from.
+
+SUMMARY
+The dataset was obtained from https://datahub.io/machine-learning/diabetes#readme but this dataset is originally from the National Institute of Diabetes and Digestive and Kidney Diseases. The main goal is to predict diabetes on a patient based on general measurements, body hormones and proteins.
+
+All patients from the sample are females of Pima Indian heritage (Group of Native Americans living in an area consisting of what is now central and southern Arizona, as well as northwestern Mexico).
+
+The variables uses are explaine below:
+*Pregnancies: Number of times pregnant
+*Glucose: Plasma glucose concentration a 2 hours in an oral glucose tolerance test
+*BloodPressure: Diastolic blood pressure (mm Hg)
+*SkinThickness: Triceps skin fold thickness (mm)
+*Insulin: 2-Hour serum insulin (mu U/ml)
+*BMI: Body mass index (weight in kg/(height in m)^2)
+*DiabetesPedigreeFunction: Diabetes pedigree function (a function which scores likelihood of diabetes based on family history)
+*Age: Age (years)
+*Outcome: Class variable (0 or 1)
 
 ### Task
 *TODO*: Explain the task you are going to be solving with this dataset and the features you will be using for it.
