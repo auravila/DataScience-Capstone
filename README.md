@@ -1,8 +1,7 @@
-*NOTE:* This file is a template that you can use to create the README for your project. The *TODO* comments below will highlight the information you should be sure to include.
 
-# Your Project Title Here
+# Diabetes Classification Project
 
-*TODO:* Write a short introduction to your project.
+The following project aims to identify the probablity of testing diabetes based on a finite set of measurements.
 
 ## Project Set Up and Installation
 *OPTIONAL:* If your project has any special installation steps, this is where you should put it. To turn this project into a professional portfolio project, you are encouraged to explain how to set up this project in AzureML.
@@ -10,16 +9,35 @@
 ## Dataset
 
 ### Overview
-*TODO*: Explain about the data you are using and where you got it from.
+
+Summary:
+The dataset was obtained from https://datahub.io/machine-learning/diabetes#readme but this dataset is originally from the National Institute of Diabetes and Digestive and Kidney Diseases. 
+
+The main goal is to predict diabetes on a patient based on general measurements, body hormones and proteins.
+
+All patients from the sample are females of Pima Indian heritage (Group of Native Americans living in an area consisting of what is now central and southern Arizona, as well as northwestern Mexico).
+
+The variables uses are explaine below:
+*Pregnancies: Number of times pregnant
+*Glucose: Plasma glucose concentration a 2 hours in an oral glucose tolerance test
+*BloodPressure: Diastolic blood pressure (mm Hg)
+*SkinThickness: Triceps skin fold thickness (mm)
+*Insulin: 2-Hour serum insulin (mu U/ml)
+*BMI: Body mass index (weight in kg/(height in m)^2)
+*DiabetesPedigreeFunction: Diabetes pedigree function (a function which scores likelihood of diabetes based on family history)
+*Age: Age (years)
+*Outcome: Class variable (0 or 1)
 
 ### Task
-*TODO*: Explain the task you are going to be solving with this dataset and the features you will be using for it.
+Use the list of measurements (attributes) from the tabular dataset to predict the class variable outcome of 0 or 1 (tested negative / tested positive)
 
 ### Access
-*TODO*: Explain how you are accessing the data in your workspace.
+The dataset is referenced twice, download and uploaded to the dataset storage of machine learning studio and referenced via the train.py program.
 
 ## Automated ML
-*TODO*: Give an overview of the `automl` settings and configuration you used for this experiment
+For the first execution of automl model the setting chosen were to use a classification model with timeout of 60 minutes and max concurrency 5. The primary metric for evaluation was AUC_weighted due to the imabalanced dataset and the potential of getting high error rate on the accuracy metric.   
+
+One of the benefits of utilizing areas under the curve is that they remain the same whether the data is balance or not.
 
 ### Results
 *TODO*: What are the results you got with your automated ML model? What were the parameters of the model? How could you have improved it?
