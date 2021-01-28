@@ -51,7 +51,7 @@ One of the benefits of utilizing areas under the curve is that they remain the s
 ### Results
 Whislt AUC_weighted was considered as one of the best measurements the result of the execution of automl model indicated that AUC_micro provided the best run metric of them all. 
 
-
+![Arq](https://github.com/auravila/DataScience-Capstone/blob/master/Screenshots/1-automlrundetails)
 
 ## Hyperparameter Tuning
 *TODO*: What kind of model did you choose for this experiment and why? Give an overview of the types of parameters and their ranges used for the hyperparameter search
