@@ -126,7 +126,7 @@ Best run id: HD_32d38e02-bbeb-4725-9506-304cb2847450_6
 
 
 It is also worth noting that some changes we added to the max iteration parameters since the runs were to small and a message of non convergence was being raised
-by the train.py logfiles. Increasing the iterations helped to provide the best run mamximized value.
+by the train.py logfiles. Increasing the iterations helped to provide the best run mamximized value. Iterations were increase from 100 to 150 and to 300.
 
 The results of these executions were far less from the results of automl votingclassified metrics therefore automl experiment was chosen as the best model for deployment.
 
@@ -143,7 +143,9 @@ AutoML Run
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/1-automlrundetails.png)
 
 Note:
-A possibility worth evaluating in order to obtain better results will be to reduce the number of variables and features and obtain more data to reduce the risk of overfitting.
+- A possibility worth evaluating in order to obtain better results will be to reduce the number of variables and features and obtain more data to reduce the risk of overfitting. 
+- Run the Bayesian sampling
+- Write a better scoring approace and introduce a different function in the tran.py to score the model.
 
 
 ## Model Deployment
@@ -169,7 +171,7 @@ Endpoint Call
 
 
 ## Screen Recording
-
+https://youtu.be/8W8EHRs3HdI
 
 ## Standout Suggestions
 Other Option attempted was to enable logging and ONNX conversion. Both of these were implemented succefully
