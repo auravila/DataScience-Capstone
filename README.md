@@ -11,6 +11,7 @@ SDK version 1.20 version required
 ### Overview
 
 Summary:
+
 The dataset was obtained from https://datahub.io/machine-learning/diabetes#readme but this dataset is originally from the National Institute of Diabetes and Digestive and Kidney Diseases. 
 
 The main goal is to predict diabetes on a patient based on general measurements, body hormones and proteins.
@@ -38,13 +39,13 @@ The variables uses are explaine below:
 *Outcome: Class variable (0 or 1)
 
 ### Task
-Use the list of measurements (attributes) from the tabular dataset to predict the class variable outcome value of 0 or 1 (tested negative / tested positive)
+Use the list of measurements (attributes) from the tabular dataset to predict the class variable outcome value of 0 or 1 (tested negative / tested positive) this wll indicate if a patiend has a probability of develop diabeted.
 
 ### Access
-The dataset is referenced twice, downloaded and uploaded to a datarouce storage of machine learning studio and also is referenced via the train.py program.
+The dataset is referenced twice, downloaded and uploaded to a datasouce storage of machine learning studio and also is referenced via the train.py program.
 
 ## Automated ML
-For the first execution of automl model the settings chosen were to use a classification model with a timeout of 60 minutes and max concurrency 5 running jobs. The primary metric for evaluation was AUC_weighted chosen due to the imabalanced dataset and the potential of getting high error rate on the accuracy metric.   
+For the first execution of the automl model the settings chosen were to use a classification model with a timeout of 60 minutes and max concurrency 5 running jobs. The primary metric for evaluation was AUC_weighted chosen due to the imabalanced dataset and the potential of getting high error rate on the accuracy metric.   
 
 One of the benefits of utilizing areas under the curve is that they remain the same whether the data is balanced or not.
 
@@ -81,22 +82,23 @@ Automl Metrics
 ## Hyperparameter Tuning
 
 Part 1:
-In order to select which is the best model for deployment I decided to run a parameter sampling configuration hyperdrive over the AUC_weighted metric and used two parameters, one for max iteractions and other for the regularization strength as input for a logistic regression in order to train the model.
+In order to select which is the best model for deployment, I decided to run a parameter sampling configuration hyperdrive over the AUC_weighted metric. Then used two parameters, one for max iteractions and other for the regularization strength as input for a logistic regression in order to train the model.
 
-Hyperdrive was configured to run with a max concurrent run of five and over one hundred total runs bounded by a bandit policy to check for thirth percent slack on every fifth execution.
+Hyperdrive was configured to run with a max concurrent run of five and over one hundred total runs bounded by a bandit policy to check for thirthy percent slack on every fifth execution. (30% was use based on the output of the first experimental run)
 
-details of the execution are listed in the notebook https://github.com/auravila/DataScience-Capstone/blob/main/hyperparameter_tuning-pimadiabetes.ipynb
+Details of the execution can be found listed in the notebook https://github.com/auravila/DataScience-Capstone/blob/main/hyperparameter_tuning-pimadiabetes.ipynb
 
 Part 2:
-In order to validate the results of the parameter sampling best metric performance I decided to run a grid sampling configuration hyperdrive over the AUC_weighted metric with the same two parameters, one for max iteractions and other for the regularization strength as input for a logistic regression in order to train the model.
 
-Hyperdrive was configured to run with a max concurrent run of five and over one hundred total runs bounded by a bandit policy to check for thirth percent slack on every fifth execution.
+In order to validate the results of the parameter sampling best metric performance, I decided to run a grid sampling configuration hyperdrive over the AUC_weighted metric with the same two parameters, one for max iteractions and other for the regularization strength as input for a logistic regression in order to train the model.
 
-details of the execution are listed in the notebook https://github.com/auravila/DataScience-Capstone/blob/main/hyperparameter_tuning-GSamp-pimadiabetes.ipynb
+Hyperdrive was configured to run with a max concurrent run of five and over one hundred total runs bounded by a bandit policy to check for thirthy percent slack on every fifth execution.
+
+Details of the execution can be found listed in the notebook https://github.com/auravila/DataScience-Capstone/blob/main/hyperparameter_tuning-GSamp-pimadiabetes.ipynb
 
 ### Results
 
-For the parameter sampling best run measure a value of 0.71 was obtained
+For the parameter sampling best run measure using the AUC_weighted metric a value of 0.71 was obtained
 
 Best run id: HD_32d38e02-bbeb-4725-9506-304cb2847450_6
 ################################
@@ -109,7 +111,7 @@ Best run id: HD_32d38e02-bbeb-4725-9506-304cb2847450_6
 {'_aml_system_ComputeTargetStatus': '{"AllocationState":"steady","PreparingNodeCount":0,"RunningNodeCount":5,"CurrentNodeCount":5}'}
 
 
-To confirm these results a hyperdrive using grid sampling as detailed in Part2 above and the result was exactly the same. 
+To confirm these results a hyperdrive using grid sampling was executed and leading to the same results.
 
 
 Best run id: HD_32d38e02-bbeb-4725-9506-304cb2847450_6
@@ -123,7 +125,7 @@ Best run id: HD_32d38e02-bbeb-4725-9506-304cb2847450_6
 {'_aml_system_ComputeTargetStatus': '{"AllocationState":"steady","PreparingNodeCount":0,"RunningNodeCount":5,"CurrentNodeCount":5}'}
 
 
-It is also woth noting that some changes we added to the max iteration parameters since the runs were to small and a message of non convergence was being raised
+It is also worth noting that some changes we added to the max iteration parameters since the runs were to small and a message of non convergence was being raised
 by the train.py logfiles. Increasing the iterations helped to provide the best run mamximized value.
 
 The results of these executions were far less from the results of automl votingclassified metrics therefore automl experiment was chosen as the best model for deployment.
@@ -139,6 +141,10 @@ Grid Sampling Run
 AutoML Run
 
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/1-automlrundetails.png)
+
+Note:
+A possibility worth evaluating in order to obtain better results will be to reduce the number of variables and features and obtain more data to reduce the risk of overfitting.
+
 
 ## Model Deployment
 
