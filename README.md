@@ -79,13 +79,66 @@ Automl Metrics
 ****** This feature was enabled later in order to convert and register the model as onnx
 
 ## Hyperparameter Tuning
-*TODO*: What kind of model did you choose for this experiment and why? Give an overview of the types of parameters and their ranges used for the hyperparameter search
 
+Part 1:
+In order to select which is the best model for deployment I decided to run a parameter sampling configuration hyperdrive over the AUC_weighted metric and used two parameters, one for max iteractions and other for the regularization strength as input for a logistic regression in order to train the model.
+
+Hyperdrive was configured to run with a max concurrent run of five and over one hundred total runs bounded by a bandit policy to check for thirth percent slack on every fifth execution.
+
+details of the execution are listed in the notebook https://github.com/auravila/DataScience-Capstone/blob/main/hyperparameter_tuning-pimadiabetes.ipynb
+
+Part 2:
+In order to validate the results of the parameter sampling best metric performance I decided to run a grid sampling configuration hyperdrive over the AUC_weighted metric with the same two parameters, one for max iteractions and other for the regularization strength as input for a logistic regression in order to train the model.
+
+Hyperdrive was configured to run with a max concurrent run of five and over one hundred total runs bounded by a bandit policy to check for thirth percent slack on every fifth execution.
+
+details of the execution are listed in the notebook https://github.com/auravila/DataScience-Capstone/blob/main/hyperparameter_tuning-GSamp-pimadiabetes.ipynb
 
 ### Results
-*TODO*: What are the results you got with your model? What were the parameters of the model? How could you have improved it?
 
-*TODO* Remeber to provide screenshots of the `RunDetails` widget as well as a screenshot of the best model trained with it's parameters.
+For the parameter sampling best run measure a value of 0.71 was obtained
+
+Best run id: HD_32d38e02-bbeb-4725-9506-304cb2847450_6
+################################
+
+ AUC_weighted: {'AUC_weighted': 0.7138211382113822}
+################################
+
+ Learning rate: ['--max_iter', '30', '--C', '1.5']
+################################
+{'_aml_system_ComputeTargetStatus': '{"AllocationState":"steady","PreparingNodeCount":0,"RunningNodeCount":5,"CurrentNodeCount":5}'}
+
+
+To confirm these results a hyperdrive using grid sampling as detailed in Part2 above and the result was exactly the same. 
+
+
+Best run id: HD_32d38e02-bbeb-4725-9506-304cb2847450_6
+################################
+
+ AUC_weighted: {'AUC_weighted': 0.7138211382113822}
+################################
+
+ Learning rate: ['--max_iter', '30', '--C', '1.5']
+################################
+{'_aml_system_ComputeTargetStatus': '{"AllocationState":"steady","PreparingNodeCount":0,"RunningNodeCount":5,"CurrentNodeCount":5}'}
+
+
+It is also woth noting that some changes we added to the max iteration parameters since the runs were to small and a message of non convergence was being raised
+by the train.py logfiles. Increasing the iterations helped to provide the best run mamximized value.
+
+The results of these executions were far less from the results of automl votingclassified metrics therefore automl experiment was chosen as the best model for deployment.
+
+Parameter Sampling Run
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/5-BestRunHyperPSampv1.png)
+
+Grid Sampling Run
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/6-BestRunHyperGSampv1.png)
+
+AutoML Run
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/1-automlrundetails.png)
 
 ## Model Deployment
 *TODO*: Give an overview of the deployed model and instructions on how to query the endpoint with a sample input.
