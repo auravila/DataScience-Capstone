@@ -4,7 +4,7 @@
 The following project aims to identify the probablity of testing diabetes based on a finite set of measurements.
 
 ## Project Set Up and Installation
-*OPTIONAL:* If your project has any special installation steps, this is where you should put it. To turn this project into a professional portfolio project, you are encouraged to explain how to set up this project in AzureML.
+SDK version 1.20 version required 
 
 ## Dataset
 
@@ -141,13 +141,43 @@ AutoML Run
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/1-automlrundetails.png)
 
 ## Model Deployment
-*TODO*: Give an overview of the deployed model and instructions on how to query the endpoint with a sample input.
+
+Steps take to deploy the model:
+1.- Save mode to disk using joblib library.   ['./output/Capstone_automl_best.joblib']
+2.- Register the model
+3.- Download the best model environment and scoring files: ('conda_env_v_1_0_0.yml', 'scoring_file_v_1_0_0.py') for the inference config 
+4.- Create a deployment config file and attach to an ACI deployment
+5.- Deploy the Model
+
+In order to query the endpoint
+
+1. Prepared a set of data as inputs and converted them into json format
+2. Raised a request to the enpoint scoring uri with the following parameters: resp = requests.post(scoring_uri, input_data, headers=headers)
+
+Active Endpoint
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/7.1-ModelEndpointActive.png)
+
+Endpoint Call
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/7.2-ModelEndpointRestCall.png)
+
 
 ## Screen Recording
-*TODO* Provide a link to a screen recording of the project in action. Remember that the screencast should demonstrate:
-- A working model
-- Demo of the deployed  model
-- Demo of a sample request sent to the endpoint and its response
+
 
 ## Standout Suggestions
-*TODO (Optional):* This is where you can provide information about any standout suggestions that you have attempted.
+Other Option attempted was to enable logging and ONNX conversion. Both of these were implemented succefully
+
+## Enable Logging
+
+In order to enable logging, enable_app_insights to the web service were enabled to true. service.update(enable_app_insights=True)
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/8-LoggingEnabled.png)
+
+## ONNX Conversion
+
+ONNX model conversion required to rerun the Automl experiment configuration setting to enable the compatibility mode to true.
+enable_onnx_compatible_models=True, ******
+
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/9-ONNXModelConversion.png)
