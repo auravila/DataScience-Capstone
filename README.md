@@ -134,9 +134,38 @@ Parameter Sampling Run
 
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/5-BestRunHyperPSampv1.png)
 
+Parameter Sampling RunDetails Progress
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/12-RunDetailsParamSamp.png)
+
 Grid Sampling Run
 
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/6-BestRunHyperGSampv1.png)
+
+
+Grid Sampling RunDetails Progress
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/13-RunDetailsGridSamp.png)
+
+
+
+Best HyperDrive Model Registered (Parameter Sampling Run)
+
+model = best_run.register_model(model_name='ParamSampbestmodel.pkl', model_path='.',
+tags={'area': "diabetes", 'type': "Classification"},
+description="Best Model using Hyperdrive Parameter Sampling"
+)
+
+print ('Model Name',model.name)
+print ('Model Version',model.version)
+print ('Model Tags',model.tags) 
+print ('Model Description', model.description)
+model.properties
+
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/10-HyperDriveBestModel.png)
+
+
 
 AutoML Run
 
