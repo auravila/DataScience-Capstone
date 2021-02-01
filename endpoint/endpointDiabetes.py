@@ -1,13 +1,12 @@
 import requests
 import json
 
-from azureml.core import Workspace
+#from azureml.core import Workspace
 
-ws = Workspace.from_config()
+#ws = Workspace.from_config()
 
 # URL for the web service, should be similar to:
-# 'http://8530a665-66f3-49c8-a953-b82a2d312917.eastus.azurecontainer.io/score'
-scoring_uri = "http://83a32d53-44fa-4308-920e-904f201d387e.australiaeast.azurecontainer.io/score"
+# 'http://159a4ac6-4925-4238-bd97-dbe0430d3a97.australiaeast.azurecontainer.io/score'
 
 # If the service is authenticated, set the key or token
 key = "Qwd1Rhrce8VwE6fHSPHIhDvJ44AVBVJR"
