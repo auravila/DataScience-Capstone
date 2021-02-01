@@ -1,7 +1,9 @@
 
 # Diabetes Classification Project
 
-The following project aims to identify the probablity of testing diabetes based on a finite set of measurements.
+The following capstone project will showcase many of the key concepts learned through the Machine Learning Engineer with Microsoft Azure Udacity course.
+
+The aim of the project is to provide a walkthrough via Jupyter notebooks and screenshots on the use of concepts such as datasets, Azureml model training, Azureml SDK, AutoML, Hyperdrive tunning and machine learning operations in order to build an end to end solution capable of predicting the probablity of diabetes testing for a sample population and based on a finite set of measurements.
 
 ## Project Set Up and Installation
 SDK version 1.20 version required 
@@ -42,7 +44,23 @@ The variables uses are explaine below:
 Use the list of measurements (attributes) from the tabular dataset to predict the class variable outcome value of 0 or 1 (tested negative / tested positive) this wll indicate if a patiend has a probability of develop diabeted.
 
 ### Access
-The dataset is referenced twice, downloaded and uploaded to a datasouce storage of machine learning studio and also is referenced via the train.py program.
+The dataset is referenced multiple times during the project. 
+
+#### Manually loaded via AzureML Interface
+Initial upload of data, this is done manually using the AzureML Studio GUI
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/14-DatasetManual.png)
+
+#### As training input for Hyperdrive train.py
+Reference via python train.py using SDK
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/15-DatasetTrain.png)
+
+#### Via SDK calls on Notebooks
+References by the Jupyter notebooks and SDK
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/16-DatasetSDK.png)
+
 
 ## Automated ML
 For the first execution of the automl model the settings chosen were to use a classification model with a timeout of 60 minutes and max concurrency 5 running jobs. The primary metric for evaluation was AUC_weighted chosen due to the imabalanced dataset and the potential of getting high error rate on the accuracy metric.   
@@ -149,7 +167,7 @@ Grid Sampling RunDetails Progress
 
 
 
-Best HyperDrive Model Registered (Parameter Sampling Run)
+# Best HyperDrive Model Registered (Parameter Sampling Run)
 
 model = best_run.register_model(model_name='ParamSampbestmodel.pkl', model_path='.',
 tags={'area': "diabetes", 'type': "Classification"},
