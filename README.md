@@ -46,18 +46,18 @@ Use the list of measurements (attributes) from the tabular dataset to predict th
 ### Access
 The dataset is referenced multiple times during the project. 
 
-# Manually loaded via AzureML Interface
+#### Manually loaded via AzureML Interface
 Initial upload of data, this is done manually using the AzureML Studio GUI
 
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/14-DatasetManual.png)
 
-# As training input for Hyperdrive train.py
+#### As training input for Hyperdrive train.py
 Reference via python train.py using SDK
 
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/15-DatasetTrain.png)
 
-# Via SDK calls on Notebooks
-Reference on the jupiter notebooks via SDK
+#### Via SDK calls on Notebooks
+References by the Jupyter notebooks and SDK
 
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/16-DatasetSDK.png)
 
