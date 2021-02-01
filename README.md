@@ -95,6 +95,41 @@ Automl RunDetails
 Automl Metrics
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/1.1-automlmetrics.png)
 
+
+#### AutoML Parameters
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/19-FittedModel.png)
+
+Parameters used by AutoML execution:
+                                                                                                    n_estimators=10,
+                                                                                                    n_jobs=1,
+                                                                                                    oob_score=False,
+                                                                                                    random_state=None,
+                                                                                                    verbose=0,
+                                                                                                    warm_start=False))],
+                                                                     verbose=False))],
+                                               flatten_transform=None,
+                                               weights=[0.06666666666666667,
+                                                        0.06666666666666667,
+                                                        0.06666666666666667,
+                                                        0.13333333333333333,
+                                                        0.06666666666666667,
+                                                        0.06666666666666667,
+                                                        0.13333333333333333,
+                                                        0.13333333333333333,
+                                                        0.13333333333333333,
+                                                        0.13333333333333333]))],
+         verbose=False)
+Y_transformer(['LabelEncoder', LabelEncoder()])
+
+
+#### AutoML Best Model
+VotingClassifier best algorithm used in the best model
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/20-AutoMLBestRun.png)
+
+
+
 ****** This feature was enabled later in order to convert and register the model as onnx
 
 ## Hyperparameter Tuning
@@ -185,11 +220,7 @@ model.properties
 
 
 
-AutoML Run
-
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/1-automlrundetails.png)
-
-Note:
+#### Note:
 - A possibility worth evaluating in order to obtain better results will be to reduce the number of variables and features and obtain more data to reduce the risk of overfitting. 
 - Run the Bayesian sampling
 - Write a better scoring approach and introduce a different function in the tran.py to score the model.
@@ -209,12 +240,20 @@ In order to query the endpoint
 1. Prepared a set of data as inputs and converted them into json format
 2. Raised a request to the endpoint scoring uri with the following parameters: resp = requests.post(scoring_uri, input_data, headers=headers)
 
-Active Endpoint
+#### Active Endpoint
 
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/7.1-ModelEndpointActive.png)
 
-Endpoint Call
+#### Endpoint Call
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/7.2-ModelEndpointRestCall.png)
+
+#### Scoring File
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/18-ModelDeploymentScoringpy.png)
+
+#### Environment File
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/17-ModelDeploymentEnvirnoment.png)
 
 
 ## Screen Recording
