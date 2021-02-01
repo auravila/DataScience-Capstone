@@ -205,13 +205,25 @@ The results of these executions were far less from the results of automl votingc
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/13-RunDetailsGridSamp.png)
 
 
-## HyperDrive Best Model Registered (Parameter Sampling Run)
-The execution results of Grid Sampling and Parameter sampling returned as similar outcome so for this project the parameter sampling
-was chosen in order to register the model
+#### Future Improvements for the project:
 
+The following list of items could possibly improve the model outcome.
+- Prevent over fitting by using more trainning date and the use of fewer features
+- Prevent target leakage and simplity the model.
+- Run a Bayesian sampling to confirm hyperdrive results
+- Develop a more fit for purpose scoring function in the tran.py to train and score the model. (Adjust the function parameters)
+
+
+## Model Deployment
+
+
+## HyperDrive Model Registration (Parameter Sampling Run): "ParamSambestmodel.pkl:5" - Not the best model!
+
+The execution results of Grid Sampling and Parameter sampling returned as similar outcome so for this project the parameter sampling
+was chosen in order to register the model.
 model = best_run.register_model(model_name='ParamSampbestmodel.pkl', model_path='.',
 tags={'area': "diabetes", 'type': "Classification"},
-### description= "Best Model using Hyperdrive Parameter Sampling"
+description= "Best Model using Hyperdrive Parameter Sampling"
 )
 
 print ('Model Name',model.name)
@@ -223,17 +235,7 @@ model.properties
 
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/10-HyperDriveBestModel.png)
 
-
-#### Future Improvements for the project:
-
-The following list of items could possibly improve the model outcome.
-- Prevent over fitting by using more trainning date and the use of fewer features
-- Prevent target leakage and simplity the model.
-- Run a Bayesian sampling to confirm hyperdrive results
-- Develop a more fit for purpose scoring function in the tran.py to train and score the model. (Adjust the function parameters)
-
-
-## Model Deployment - AutoML
+### AutomML Deploypment
 
 Steps take to deploy the model:
 1.- Save mode to disk using joblib library.   ['./output/Capstone_automl_best.joblib']
@@ -246,6 +248,10 @@ In order to query the endpoint
 
 1. Prepared a set of data as inputs and converted them into json format
 2. Raised a request to the endpoint scoring uri with the following parameters: resp = requests.post(scoring_uri, input_data, headers=headers)
+
+#### Best Model - Automl: "automlpimadiabetes:3"
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/21-AutoMLBestmodel.png)
 
 #### Active Endpoint
 
