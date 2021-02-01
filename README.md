@@ -153,28 +153,35 @@ Details of the execution can be found listed in the notebook https://github.com/
 
 For the parameter sampling best run measure using the AUC_weighted metric a value of 0.71 was obtained
 
-Best run id: HD_32d38e02-bbeb-4725-9506-304cb2847450_6
+Best run id: HD_3ab2f6ca-c0b2-4906-b3cd-63d96f91146c_1
+
 ################################
 
  AUC_weighted: {'AUC_weighted': 0.7138211382113822}
+
 ################################
 
- Learning rate: ['--max_iter', '30', '--C', '1.5']
+ Learning rate: ['--C', '1.5', '--max_iter', '30']
+
 ################################
-{'_aml_system_ComputeTargetStatus': '{"AllocationState":"steady","PreparingNodeCount":0,"RunningNodeCount":5,"CurrentNodeCount":5}'}
+{'_aml_system_ComputeTargetStatus': '{"AllocationState":"steady","PreparingNodeCount":0,"RunningNodeCount":0,"CurrentNodeCount":0}'}
 
 
-To confirm these results a hyperdrive using grid sampling was executed and leading to the same results.
+### To validate these results a hyperdrive using grid sampling was also executed which lead to the same results.
 
 
 Best run id: HD_32d38e02-bbeb-4725-9506-304cb2847450_6
+
 ################################
 
  AUC_weighted: {'AUC_weighted': 0.7138211382113822}
+
 ################################
 
  Learning rate: ['--max_iter', '30', '--C', '1.5']
+
 ################################
+
 {'_aml_system_ComputeTargetStatus': '{"AllocationState":"steady","PreparingNodeCount":0,"RunningNodeCount":5,"CurrentNodeCount":5}'}
 
 
@@ -235,7 +242,7 @@ model.properties
 
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/10-HyperDriveBestModel.png)
 
-### AutomML Deploypment
+### AutomML Registration & Deployment
 
 Steps take to deploy the model:
 1.- Save mode to disk using joblib library.   ['./output/Capstone_automl_best.joblib']
@@ -249,9 +256,15 @@ In order to query the endpoint
 1. Prepared a set of data as inputs and converted them into json format
 2. Raised a request to the endpoint scoring uri with the following parameters: resp = requests.post(scoring_uri, input_data, headers=headers)
 
-#### Best Model - Automl: "automlpimadiabetes:3"
+#### Registration and Deployment Model - Automl: "automlpimadiabetes:3"
 
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/21-AutoMLBestmodel.png)
+
+
+#### Deployment
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/22-AutoMLBestModelDep.png)
+
 
 #### Active Endpoint
 
