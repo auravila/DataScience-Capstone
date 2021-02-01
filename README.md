@@ -12,7 +12,7 @@ SDK version 1.20 version required
 
 ### Overview
 
-Summary:
+#### Summary:
 
 The dataset was obtained from https://datahub.io/machine-learning/diabetes#readme but this dataset is originally from the National Institute of Diabetes and Digestive and Kidney Diseases. 
 
@@ -46,17 +46,17 @@ Use the list of measurements (attributes) from the tabular dataset to predict th
 ### Access
 The dataset is referenced multiple times during the project. 
 
-#### Manually loaded via AzureML Interface
+####    Manually loaded via AzureML Interface
 Initial upload of data, this is done manually using the AzureML Studio GUI
 
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/14-DatasetManual.png)
 
-#### As training input for Hyperdrive train.py
+####    As training input for Hyperdrive train.py
 Reference via python train.py using SDK
 
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/15-DatasetTrain.png)
 
-#### Via SDK calls on Notebooks
+####    Via SDK calls on Notebooks
 References by the Jupyter notebooks and SDK
 
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/16-DatasetSDK.png)
@@ -134,14 +134,14 @@ VotingClassifier best algorithm used in the best model
 
 ## Hyperparameter Tuning
 
-Part 1:
+### Part 1:
 In order to select which is the best model for deployment, I decided to run a parameter sampling configuration hyperdrive over the AUC_weighted metric. Then used two parameters, one for max interactions and other for the regularization strength as input for a logistic regression in order to train the model.
 
 Hyperdrive was configured to run with a max concurrent run of five and over one hundred total runs bounded by a bandit policy to check for thirty percent slack on every fifth execution. (30% was use based on the output of the first experimental run)
 
 Details of the execution can be found listed in the notebook https://github.com/auravila/DataScience-Capstone/blob/main/hyperparameter_tuning-pimadiabetes.ipynb
 
-Part 2:
+### Part 2:
 
 In order to validate the results of the parameter sampling best metric performance, I decided to run a grid sampling configuration hyperdrive over the AUC_weighted metric with the same two parameters, one for max interactions and other for the regularization strength as input for a logistic regression in order to train the model.
 
@@ -183,30 +183,35 @@ by the train.py logfiles. Increasing the iterations helped to provide the best r
 
 The results of these executions were far less from the results of automl votingclassified metrics therefore automl experiment was chosen as the best model for deployment.
 
-Parameter Sampling Run
+### Parameter Sampling Run
+
 
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/5-BestRunHyperPSampv1.png)
 
-Parameter Sampling RunDetails Progress
+### Parameter Sampling RunDetails Progress
+
 
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/12-RunDetailsParamSamp.png)
 
-Grid Sampling Run
+### Grid Sampling Run
+
 
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/6-BestRunHyperGSampv1.png)
 
 
-Grid Sampling RunDetails Progress
+### Grid Sampling RunDetails Progress
+
 
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/13-RunDetailsGridSamp.png)
 
 
-
-# Best HyperDrive Model Registered (Parameter Sampling Run)
+## HyperDrive Best Model Registered (Parameter Sampling Run)
+The execution results of Grid Sampling and Parameter sampling returned as similar outcome so for this project the parameter sampling
+was chosen in order to register the model
 
 model = best_run.register_model(model_name='ParamSampbestmodel.pkl', model_path='.',
 tags={'area': "diabetes", 'type': "Classification"},
-description="Best Model using Hyperdrive Parameter Sampling"
+### description= "Best Model using Hyperdrive Parameter Sampling"
 )
 
 print ('Model Name',model.name)
@@ -219,14 +224,16 @@ model.properties
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/10-HyperDriveBestModel.png)
 
 
+#### Future Improvements for the project:
 
-#### Note:
-- A possibility worth evaluating in order to obtain better results will be to reduce the number of variables and features and obtain more data to reduce the risk of overfitting. 
-- Run the Bayesian sampling
-- Write a better scoring approach and introduce a different function in the tran.py to score the model.
+The following list of items could possibly improve the model outcome.
+- Prevent over fitting by using more trainning date and the use of fewer features
+- Prevent target leakage and simplity the model.
+- Run a Bayesian sampling to confirm hyperdrive results
+- Develop a more fit for purpose scoring function in the tran.py to train and score the model. (Adjust the function parameters)
 
 
-## Model Deployment
+## Model Deployment - AutoML
 
 Steps take to deploy the model:
 1.- Save mode to disk using joblib library.   ['./output/Capstone_automl_best.joblib']
