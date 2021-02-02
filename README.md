@@ -49,17 +49,17 @@ The dataset is referenced multiple times during the project.
 ####    Manually loaded via AzureML Interface
 Initial upload of data, this is done manually using the AzureML Studio GUI
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/14-DatasetManual.png)
+![](Screenshots\14-DatasetManual.png)
 
 ####    As training input for Hyperdrive train.py
 Reference via python train.py using SDK
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/15-DatasetTrain.png)
+![](Screenshots\15-DatasetTrain.png)
 
 ####    Via SDK calls on Notebooks
 References by the Jupyter notebooks and SDK
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/16-DatasetSDK.png)
+![](Screenshots\16-DatasetSDK.png)
 
 
 ## Automated ML
@@ -90,19 +90,19 @@ automl_config = AutoMLConfig(compute_target=compute_target,
                             )
 
 Automl RunDetails
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/1-automlrundetails.png)
+![](Screenshots\1-automlrundetails.png)
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/25-AM.png)
+![](Screenshots\25-AM.png)
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/26-AM.png)
+![](Screenshots\26-AM.png)
 
 Automl Metrics
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/1.1-automlmetrics.png)
+![](Screenshots\1.1-automlmetrics.png)
 
 
 #### AutoML Parameters
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/19-FittedModel.png)
+![](Screenshots\19-FittedModel.png)
 
 Parameters used by AutoML execution:
                                                                                                     n_estimators=10,
@@ -130,7 +130,7 @@ Y_transformer(['LabelEncoder', LabelEncoder()])
 #### AutoML Best Model
 VotingClassifier best algorithm used in the best model
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/20-AutoMLBestRun.png)
+![](Screenshots\20-AutoMLBestRun.png)
 
 
 
@@ -197,20 +197,20 @@ The results of these executions were far less from the results of automl votingc
 ### Parameter Sampling Run
 
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/5-BestRunHyperPSampv1.png)
+![](Screenshots\5-BestRunHyperPSampv1.png)
 
 ### Parameter Sampling RunDetails Progress
 
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/12-RunDetailsParamSamp.png)
+![](Screenshots\12-RunDetailsParamSamp.png)
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/24-HD1.png)
+![](Screenshots\24-HD1.png)
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/24-HD2.png)
+![](Screenshots\24-HD2.png)
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/24-HD3.png)
+![](Screenshots\24-HD3.png)
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/24-HD4.png)
+![](Screenshots\24-HD4.png)
 
 
 
@@ -218,13 +218,13 @@ The results of these executions were far less from the results of automl votingc
 ### Grid Sampling Run
 
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/6-BestRunHyperGSampv1.png)
+![](Screenshots\6-BestRunHyperGSampv1.png)
 
 
 ### Grid Sampling RunDetails Progress
 
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/13-RunDetailsGridSamp.png)
+![](Screenshots\13-RunDetailsGridSamp.png)
 
 
 #### Future Improvements for the project:
@@ -255,7 +255,7 @@ print ('Model Description', model.description)
 model.properties
 
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/10-HyperDriveBestModel.png)
+![](Screenshots\10-HyperDriveBestModel.png)
 
 ## AutomML Best Model Registration & Deployment
 
@@ -273,30 +273,30 @@ In order to query the endpoint
 
 #### Registration and Deployment Model - Automl: "automlpimadiabetes:3"
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/21-AutoMLBestmodel.png)
+![](Screenshots\21-AutoMLBestmodel.png)
 
 
 #### Deployment
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/22-AutoMLBestModelDep.png)
+![](Screenshots\22-AutoMLBestModelDep.png)
 
 
 #### Active Endpoint
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/7.1-ModelEndpointActive.png)
+![](Screenshots\7.1-ModelEndpointActive.png)
 
 #### Endpoint Call
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/7.2-ModelEndpointRestCall.png)
+![](Screenshots\7.2-ModelEndpointRestCall.png)
 
 #### Scoring File
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/18-ModelDeploymentScoringpy.png)
+![](Screenshots\18-ModelDeploymentScoringpy.png)
 
 #### Environment File
 
 bestmodel.download_file('outputs/conda_env_v_1_0_0.yml', 'myenv.yml')  
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/23-MyEnvyml.png)
+![](Screenshots\23-MyEnvyml.png)
 
 
 ## Screen Recording
@@ -309,7 +309,7 @@ Other Option attempted was to enable logging and ONNX conversion. Both of these 
 
 In order to enable logging, enable_app_insights to the web service were enabled to true. service.update(enable_app_insights=True)
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/8-LoggingEnabled.png)
+![](Screenshots\8-LoggingEnabled.png)
 
 ## ONNX Conversion
 
@@ -317,4 +317,4 @@ ONNX model conversion required to rerun the Automl experiment configuration sett
 enable_onnx_compatible_models=True, ******
 
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/9-ONNXModelConversion.png)
+![](Screenshots\9-ONNXModelConversion.png)
