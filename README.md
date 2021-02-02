@@ -92,6 +92,10 @@ automl_config = AutoMLConfig(compute_target=compute_target,
 Automl RunDetails
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/1-automlrundetails.png)
 
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/25-AM.png)
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/26-AM.png)
+
 Automl Metrics
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/1.1-automlmetrics.png)
 
@@ -167,7 +171,7 @@ Best run id: HD_3ab2f6ca-c0b2-4906-b3cd-63d96f91146c_1
 {'_aml_system_ComputeTargetStatus': '{"AllocationState":"steady","PreparingNodeCount":0,"RunningNodeCount":0,"CurrentNodeCount":0}'}
 
 
-### To validate these results a hyperdrive using grid sampling was also executed which lead to the same results.
+#### To validate these results a hyperdrive using grid sampling was also executed which lead to the same results.
 
 
 Best run id: HD_32d38e02-bbeb-4725-9506-304cb2847450_6
@@ -199,6 +203,17 @@ The results of these executions were far less from the results of automl votingc
 
 
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/12-RunDetailsParamSamp.png)
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/24-HD1.png)
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/24-HD2.png)
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/24-HD3.png)
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/24-HD4.png)
+
+
+
 
 ### Grid Sampling Run
 
@@ -242,7 +257,7 @@ model.properties
 
 ![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/10-HyperDriveBestModel.png)
 
-### AutomML Registration & Deployment
+## AutomML Best Model Registration & Deployment
 
 Steps take to deploy the model:
 1.- Save mode to disk using joblib library.   ['./output/Capstone_automl_best.joblib']
@@ -279,7 +294,9 @@ In order to query the endpoint
 
 #### Environment File
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/17-ModelDeploymentEnvirnoment.png)
+bestmodel.download_file('outputs/conda_env_v_1_0_0.yml', 'myenv.yml')  
+
+![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/23-MyEnvyml.png)
 
 
 ## Screen Recording
