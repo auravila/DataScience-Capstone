@@ -72,9 +72,27 @@ The confusion matrix indicated that the dataset is unbalanced and directed to ch
 |Tested Negative|451|49|
 |Tested Positive|116|152|
 
+Based on this results and the nature of the dataset, it was decided o use area unde the curve primary metrics to obtain the most accurate results. One of the benefits of utilizing areas under the curve is that they remain the same whether the data is balanced or not.
+
+
 The first execution of the automl model the settings chosen were to use a classification model with a timeout of 60 minutes and max concurrency 5 running jobs. The primary metric for evaluation was AUC_weighted chosen due to the imbalanced dataset and the potential of getting high error rate on the accuracy metric.   
 
-One of the benefits of utilizing areas under the curve is that they remain the same whether the data is balanced or not.
+List of parameter used for the AutoML config
+
+|Parameter|Value|Rationale|
+|-|-|-|
+|Experiment Timeout Minutes|60|Maximum time in minutes that each iteration can run for before it terminates|
+|Max_Concurrent_iterations|5|Represents the maximum number of iterations, on a cluster the sum of the max_concurrent_iterations values for all experiments should be less than or equal to the maximum number of nodes.|
+|Primary Metric|AUC_Weighted|The metric that Automated Machine Learning will optimize for model selection.|
+|compute_target|compute_target|The Azure Machine Learning compute target to run the experiment|
+|task|classification|This is the nature of the problem to solve|
+|label_column_name|dataset|The name of the label column.|
+|path|project_folder|path to the Azure Machine Learning project folder|
+|enable_early_stopping|True|Default behaviour, early stopping window starts on the 21st iteration and looks for early_stopping_n_iters iterations|
+|enable_onnx_compatible_models|True|enable or disable enforcing the ONNX-compatible models. **Enabled for ONNX deployment step**|
+|featurization|auto|Automated machine learning featurization steps (feature normalization, handling missing data, converting text to numeric, etc.)|
+|debug_log|automl_error.log|log file to write debug information to|
+
 
 ### Results
 Whilst AUC_weighted was considered as one of the best measurements the result of the execution of automl model indicated that AUC_micro provided the best run metric of them all. 
