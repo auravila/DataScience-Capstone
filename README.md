@@ -1,4 +1,3 @@
-
 # Diabetes Classification Project
 
 The following capstone project will showcase many of the key concepts learned through the Machine Learning Engineer with Microsoft Azure Udacity course.
@@ -22,23 +21,22 @@ All patients from the sample are females of Pima Indian heritage (Group of Nativ
 
 The variables use is explained below:
 
-*Pregnancies: Number of times pregnant
+|Variable|Description|Data type| Unique Value| Mean | Standard Dev|
+|---|---|--|--|--|--|
+|Pregnancies| Number of times pregnant|Numeric|17|3.8|3.4|
+|Plasma glucose concentration|2 hours in an oral glucose tolerance test|Numeric|136|120.9|32|
+|Blood Pressure|Diastolic blood pressure (mm Hg)|Numeric|47|69.1|19.4|
+|Skin Thickness|Triceps skin fold thickness (mm)|Numeric|51|20.5|16.0|
+|Insulin|2-Hour serum insulin (mu U/ml)|Numeric|186|79.8|115.2|
+|BMI|Body mass index (weight in kg/ (height in m) ^2)|Numeric|248|32.0|7.9|
+|DiabetesPedigreeFunction|Diabetes pedigree function (a function which scores likelihood of diabetes based on family history)|Numeric|517|0.5|0.3|
+|Age| Age (years)|Numeric |52|33.2|11.8|
+|Outcome| Class variable (0 or 1)|Numeric |2|||
 
-*Glucose: Plasma glucose concentration 2 hours in an oral glucose tolerance test
 
-*Blood Pressure: Diastolic blood pressure (mm Hg)
+|Total Sample Records|768|
+|-|-|
 
-*Skin Thickness: Triceps skin fold thickness (mm)
-
-*Insulin: 2-Hour serum insulin (mu U/ml)
-
-*BMI: Body mass index (weight in kg/ (height in m) ^2)
-
-*DiabetesPedigreeFunction: Diabetes pedigree function (a function which scores likelihood of diabetes based on family history)
-
-*Age: Age (years)
-
-*Outcome: Class variable (0 or 1)
 
 ### Task
 Use the list of measurements (attributes) from the tabular dataset to predict the class variable outcome value of 0 or 1 (tested negative / tested positive) this will indicate if a patient has a probability of developing diabetes.
