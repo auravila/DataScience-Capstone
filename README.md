@@ -121,6 +121,8 @@ Parameters used for the automl run, code:
 |                             **automl_settings|
 |                            )|
 
+*Note*: For this particular excercise I also executed another automl experiment with the featurization switch set to off, results were the same however took some extra time to complete, this was somehow expected due to having a clean dataset. This can be found in the otherRuns folder, filename: AutoMLnoFeat.ipynb notebook
+
 
 ### Results
 Whilst AUC_weighted was considered as one of the best measurements the result of the execution of automl model indicated that AUC_micro provided the best run metric of them all. 
@@ -172,14 +174,19 @@ VotingClassifier best algorithm used in the best model
 
 ## Hyperparameter Tuning
 
-### Part 1:
+In order to validate the results of the previous AutoML experiment run and to select a best model, I decided to run two more experiments using hyperdrive. The first experiment (part 1) using Parameter Sampling and Grid Sampling (part 2)
+
+The scoring funtion in the train.py esklearn estimator script
+
+### Parameter Sampling (part 1):
+
 In order to select which is the best model for deployment, I decided to run a parameter sampling configuration hyperdrive over the AUC_weighted metric. Then used two parameters, one for max interactions and other for the regularization strength as input for a logistic regression in order to train the model.
 
 Hyperdrive was configured to run with a max concurrent run of five and over one hundred total runs bounded by a bandit policy to check for thirty percent slack on every fifth execution. (30% was use based on the output of the first experimental run)
 
 Details of the execution can be found listed in the notebook https://github.com/auravila/DataScience-Capstone/blob/main/hyperparameter_tuning-pimadiabetes.ipynb
 
-### Part 2:
+### Grid Sampling (part 2):
 
 In order to validate the results of the parameter sampling best metric performance, I decided to run a grid sampling configuration hyperdrive over the AUC_weighted metric with the same two parameters, one for max interactions and other for the regularization strength as input for a logistic regression in order to train the model.
 
@@ -339,16 +346,39 @@ https://youtu.be/RnX0XOyPqrU
 ## Standout Suggestions
 Other Option attempted was to enable logging and ONNX conversion. Both of these were implemented succesfully
 
+
+|Standout Suggestion |Results & Screenshots|
+|-|-|
+|Enable Logging | ![](/Screenshots/8-LoggingEnabled.png) |
+|ONNX Conversion| ![](/Screenshots/9-ONNXModelConversion.png)|
+
 ## Enable Logging
 
-In order to enable logging, enable_app_insights to the web service were enabled to true. service.update(enable_app_insights=True)
+For a web service to have the loggin enable is required to execute the code below:
 
-![](Screenshots\8-LoggingEnabled.png)
+|Code Lines| 
+|-|  
+|service.update(enable_app_insights=True)|
+
 
 ## ONNX Conversion
 
-ONNX model conversion required to rerun the Automl experiment configuration setting to enable the compatibility mode to true.
-enable_onnx_compatible_models=True, ******
+For a model to be registered and converted to ONNX, the AutoML configuration setting of the experiment needs to be enabled as follow.
+enable_onnx_compatible_models=True
 
+Then run the following code snippet
 
-![](Screenshots\9-ONNXModelConversion.png)
+|Code Lines| 
+|-|  
+|from azureml.automl.runtime.onnx_convert import OnnxConverter|
+||
+|best_run, onnx_mdl = remote_run.get_output(return_onnx_model=True)|
+||
+|onnx_fl_path = "./best_model.onnx"|
+|OnnxConverter.save_onnx_model(onnx_mdl, onnx_fl_path)|
+||
+|model = Model.register(model_path = "./",|
+|                       model_name = "best_model.onnx",|
+|                       tags = {"onnx": "MyFirstonnx"},|
+|                       description = "pimadiabetesonnx",|
+|                       workspace = ws)|
