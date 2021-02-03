@@ -60,8 +60,11 @@ The dataset is referenced multiple times during the project.
 |Via python train.py using SDK call| ![](/Screenshots/15-DatasetTrain.png)|
 |Via Jupyter notebooks and SDK call| ![](/Screenshots/16-DatasetSDK.png)|
 
-|Code Snipet| URL = 'https://datahub.io/machine-learning/diabetes/r/diabetes.csv'   ds = TabularDatasetFactory.from_delimited_files(path=URL)|  
-|-|-|
+|Code Lines| 
+|-|
+|URL = 'https://datahub.io/machine-learning/diabetes/r/diabetes.csv'  
+ds = TabularDatasetFactory.from_delimited_files(path=URL)|  
+
 
 
 ## Automated ML
@@ -99,22 +102,24 @@ List of parameter used for the AutoML config
 
 Parameters used for the automl run, code:
 
-automl_settings = {
-    "experiment_timeout_minutes": 60,
-    "max_concurrent_iterations": 5,
-    "primary_metric" : 'AUC_weighted'
-}
-automl_config = AutoMLConfig(compute_target=compute_target,
-                             task = "classification",
-                             training_data=dataset,
-                             label_column_name="class",   
-                             path = project_folder,
-                             enable_early_stopping= True,
-                             enable_onnx_compatible_models=True, ******
-                             featurization= 'auto',
-                             debug_log = "automl_errors.log",
-                             **automl_settings
-                            )
+|Code Lines| 
+|-|  
+|automl_settings = {|
+|    "experiment_timeout_minutes": 60,|
+|    "max_concurrent_iterations": 5,|
+|    "primary_metric" : 'AUC_weighted'|
+|}|
+|automl_config = AutoMLConfig(compute_target=compute_target,|
+|                             task = "classification",|
+|                             training_data=dataset,|
+|                             label_column_name="class",|   
+|                             path = project_folder,|
+|                             enable_early_stopping= True,|
+|                             enable_onnx_compatible_models=True, ******|
+|                             featurization= 'auto',|
+|                             debug_log = "automl_errors.log",|
+|                             **automl_settings|
+|                            )|
 
 
 ### Results
@@ -124,11 +129,9 @@ Whilst AUC_weighted was considered as one of the best measurements the result of
 |AutoML|Results & Screenshots|
 |-|-|
 |Automl RunDetails Results| ![](/Screenshots/1-automlrundetails.png) |
-|RunDetails: Best Algorithm and metric| ![](/Screenshots/25-AM.png)|
+|RunDetails: Best Algorithm and metric score| ![](/Screenshots/25-AM.png)|
 |RunDetails: Primary Metric| ![](/Screenshots/26-AM.png)|
 |AutoMl Experiment Metrics| ![](/Screenshots/1.1-automlmetrics.png)|
-
-
 
 
 #### AutoML Parameters
