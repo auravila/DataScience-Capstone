@@ -9,7 +9,7 @@ The aim of the project is to provide a walkthrough via Jupyter notebooks and scr
 The list of steps below are required in order to execute the AutoML project which includes the best model and webservice deployment.
 
 
-||Dependecies Setup and Installation|
+||Dependencies Setup and Installation|
 |---|---|
 |1|Create a compute Instance in AzureML|
 |2|Download project files from current repository and Upload Jupyter Notebook to AzureML - File:DataScience-Capstone/automl-pimadiabetes.ipynb |
