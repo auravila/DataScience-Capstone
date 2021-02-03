@@ -343,8 +343,9 @@ bestmodel.download_file('outputs/conda_env_v_1_0_0.yml', 'myenv.yml')
 ## Screen Recording
 https://youtu.be/RnX0XOyPqrU
 
+
 ## Standout Suggestions
-Other Option attempted was to enable logging and ONNX conversion. Both of these were implemented succesfully
+Other Option attempted and succesfully immplemented were to enable logging and ONNX model conversion. 
 
 
 |Standout Suggestion |Results & Screenshots|
@@ -352,7 +353,7 @@ Other Option attempted was to enable logging and ONNX conversion. Both of these 
 |Enable Logging | ![](/Screenshots/8-LoggingEnabled.png) |
 |ONNX Conversion| ![](/Screenshots/9-ONNXModelConversion.png)|
 
-## Enable Logging
+#### Enable Logging
 
 For a web service to have the loggin enable is required to execute the code below:
 
@@ -361,7 +362,7 @@ For a web service to have the loggin enable is required to execute the code belo
 |service.update(enable_app_insights=True)|
 
 
-## ONNX Conversion
+#### ONNX Conversion
 
 For a model to be registered and converted to ONNX, the AutoML configuration setting of the experiment needs to be enabled as follow.
 enable_onnx_compatible_models=True
