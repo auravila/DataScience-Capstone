@@ -8,6 +8,7 @@ The aim of the project is to provide a walkthrough via Jupyter notebooks and scr
 
 The list of steps below are required in order to execute the AutoML project which includes the best model and webservice deployment.
 
+
 ||Dependecies Setup and Installation|
 |---|---|
 |1|Create a compute Instance in AzureML|
@@ -15,6 +16,7 @@ The list of steps below are required in order to execute the AutoML project whic
 |3|Upgrade SDK version 1.20|
 |4|Install azureml-sklearn|
 |5|Run Notebook|
+
 
 ## Dataset
 
@@ -28,6 +30,7 @@ All patients from the sample are females of Pima Indian heritage (Group of Nativ
 
 The variables use is explained below:
 
+
 |Variable|Description|Data type| Unique Value| Mean | Standard Dev|
 |---|---|--|--|--|--|
 |Pregnancies| Number of times pregnant|Numeric|17|3.8|3.4|
@@ -39,7 +42,7 @@ The variables use is explained below:
 |DiabetesPedigreeFunction|Diabetes pedigree function (a function which scores likelihood of diabetes based on family history)|Numeric|517|0.5|0.3|
 |Age| Age (years)|Numeric |52|33.2|11.8|
 |Outcome| Class variable (0 or 1)|Numeric |2|||
-
+  
 
 |Total Sample Records|768|
 |-|-|
@@ -94,10 +97,7 @@ List of parameter used for the AutoML config
 |debug_log|automl_error.log|log file to write debug information to|
 
 
-### Results
-Whilst AUC_weighted was considered as one of the best measurements the result of the execution of automl model indicated that AUC_micro provided the best run metric of them all. 
-
-Parameters used for the automl run.
+Parameters used for the automl run, code:
 
 automl_settings = {
     "experiment_timeout_minutes": 60,
@@ -116,15 +116,19 @@ automl_config = AutoMLConfig(compute_target=compute_target,
                              **automl_settings
                             )
 
-Automl RunDetails
-![](Screenshots\1-automlrundetails.png)
 
-![](Screenshots\25-AM.png)
+### Results
+Whilst AUC_weighted was considered as one of the best measurements the result of the execution of automl model indicated that AUC_micro provided the best run metric of them all. 
 
-![](Screenshots\26-AM.png)
 
-Automl Metrics
-![](Screenshots\1.1-automlmetrics.png)
+|AutoML|Results & Screenshots|
+|-|-|
+|Automl RunDetails Results| ![](/Screenshots/1-automlrundetails.png) |
+|RunDetails: Best Algorithm and metric| ![](/Screenshots/25-AM.png)|
+|RunDetails: Primary Metric| ![](/Screenshots/26-AM.png)|
+|AutoMl Experiment Metrics| ![](/Screenshots/1.1-automlmetrics.png)|
+
+
 
 
 #### AutoML Parameters
