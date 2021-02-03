@@ -300,7 +300,7 @@ bestmodel.download_file('outputs/conda_env_v_1_0_0.yml', 'myenv.yml')
 
 
 ## Screen Recording
-https://youtu.be/8W8EHRs3HdI
+https://youtu.be/RnX0XOyPqrU
 
 ## Standout Suggestions
 Other Option attempted was to enable logging and ONNX conversion. Both of these were implemented succesfully
