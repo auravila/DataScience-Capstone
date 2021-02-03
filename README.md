@@ -62,7 +62,17 @@ The dataset is referenced multiple times during the project.
 
 
 ## Automated ML
-For the first execution of the automl model the settings chosen were to use a classification model with a timeout of 60 minutes and max concurrency 5 running jobs. The primary metric for evaluation was AUC_weighted chosen due to the imbalanced dataset and the potential of getting high error rate on the accuracy metric.   
+
+In this project an initial AutoML experiment was built with the aid of ML Studio in order to obtain some preliminary metrics especially and dataset analysis mainly to obtain a view on the confusion matrix for the target variable.
+
+The confusion matrix indicated that the dataset is unbalanced and directed to choose an appropiate best metric indicator. 
+
+| |Tested Negative|Tested Positive|
+|-|-|-|
+|Tested Negative|451|49|
+|Tested Positive|116|152|
+
+The first execution of the automl model the settings chosen were to use a classification model with a timeout of 60 minutes and max concurrency 5 running jobs. The primary metric for evaluation was AUC_weighted chosen due to the imbalanced dataset and the potential of getting high error rate on the accuracy metric.   
 
 One of the benefits of utilizing areas under the curve is that they remain the same whether the data is balanced or not.
 
