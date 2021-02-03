@@ -6,19 +6,19 @@ The aim of the project is to provide a walkthrough via Jupyter notebooks and scr
 
 ## Project Set Up and Installation
 
+The list of steps below are required in order to execute the AutoML project which includes the best model and webservice deployment.
+
 ||Dependecies Setup and Installation|
 |---|---|
 |1|Create a compute Instance in AzureML|
 |2|Download project files from current repository and Upload Jupyter Notebook to AzureML - File:DataScience-Capstone/automl-pimadiabetes.ipynb |
-|3|Upgrade SDK version 1.20 |
+|3|Upgrade SDK version 1.20|
 |4|Install azureml-sklearn|
 |5|Run Notebook|
 
 ## Dataset
 
 ### Overview
-
-#### Summary:
 
 The dataset was obtained from https://datahub.io/machine-learning/diabetes#readme but this dataset is originally from the National Institute of Diabetes and Digestive and Kidney Diseases. 
 
@@ -51,20 +51,14 @@ Use the list of measurements (attributes) from the tabular dataset to predict th
 ### Access
 The dataset is referenced multiple times during the project. 
 
-####    Manually loaded via AzureML Interface
-Initial upload of data, this is done manually using the AzureML Studio GUI
+|References|Screenshot|
+|-|-|
+|Tabular dataset manual upload using AzureML Studio| ![](/Screenshots/14-DatasetManual.png) |
+|Via python train.py using SDK call| ![](/Screenshots/15-DatasetTrain.png)|
+|Via Jupyter notebooks and SDK call| ![](/Screenshots/16-DatasetSDK.png)|
 
-![](Screenshots\14-DatasetManual.png)
-
-####    As training input for Hyperdrive train.py
-Reference via python train.py using SDK
-
-![](Screenshots\15-DatasetTrain.png)
-
-####    Via SDK calls on Notebooks
-References by the Jupyter notebooks and SDK
-
-![](Screenshots\16-DatasetSDK.png)
+|Code Snipet| URL = 'https://datahub.io/machine-learning/diabetes/r/diabetes.csv'   ds = TabularDatasetFactory.from_delimited_files(path=URL)|  
+|-|-|
 
 
 ## Automated ML
