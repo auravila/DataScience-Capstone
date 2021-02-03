@@ -5,7 +5,14 @@ The following capstone project will showcase many of the key concepts learned th
 The aim of the project is to provide a walkthrough via Jupyter notebooks and screenshots on the use of concepts such as datasets, Azureml model training, Azureml SDK, AutoML, Hyperdrive tunning and machine learning operations in order to build an end to end solution capable of predicting the probability of diabetes testing for a sample population and based on a finite set of measurements.
 
 ## Project Set Up and Installation
-SDK version 1.20 version required 
+
+||Dependecies Setup and Installation|
+|---|---|
+|1|Create a compute Instance in AzureML|
+|2|Download project files from current repository and Upload Jupyter Notebook to AzureML - File:DataScience-Capstone/automl-pimadiabetes.ipynb |
+|3|Upgrade SDK version 1.20 |
+|4|Install azureml-sklearn|
+|5|Run Notebook|
 
 ## Dataset
 
