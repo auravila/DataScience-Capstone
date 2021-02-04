@@ -2,11 +2,11 @@
 
 The following capstone project will showcase many of the key concepts learned through the Machine Learning Engineer with Microsoft Azure Udacity course.
 
-The aim of the project is to provide a walkthrough via Jupyter notebooks and screenshots on the use of concepts such as datasets, Azureml model training, Azureml SDK, AutoML, Hyperdrive tunning and machine learning operations in order to build an end to end solution capable of predicting the probability of diabetes testing for a sample population and based on a finite set of measurements.
+The aim of the project is to provide a walkthrough via Jupyter notebooks and screenshots on the use of concepts such as datasets, AzureML model training, AzureML SDK, AutoML, Hyperdrive tunning and machine learning operations in order to build an end to end solution capable of predicting the probability of diabetes testing for a sample population and based on a finite set of measurements.
 
 ## Project Set Up and Installation
 
-The list of steps below are required in order to execute the AutoML project which includes the best model and webservice deployment.
+The list of steps below is required in order to execute the AutoML project which includes the best model and webservice deployment.
 
 
 ||Dependencies Setup and Installation|
@@ -14,7 +14,7 @@ The list of steps below are required in order to execute the AutoML project whic
 |1|Create a compute Instance in AzureML|
 |2|Download project files from current repository and Upload Jupyter Notebook to AzureML - File:DataScience-Capstone/automl-pimadiabetes.ipynb |
 |3|Upgrade SDK version 1.20|
-|4|Install azureml-sklearn|
+|4|Install AzureML-sklearn|
 |5|Run Notebook|
 
 
@@ -69,22 +69,22 @@ ds = TabularDatasetFactory.from_delimited_files(path=URL)|
 
 ## Automated ML
 
-In this project an initial AutoML experiment was built with the aid of ML Studio in order to obtain some preliminary metrics. And to obtain a view on the confusion matrix for the target variable. For this experiment a classification model was selected sice it fits properly to predict small set of values.
+In this project an initial AutoML experiment was built with the aid of ML Studio in order to obtain some preliminary metrics. And to obtain a view on the confusion matrix for the target variable. For this experiment a classification model was selected since it fits properly to predict small set of values.
 
 * **Classification:** A model that generates output that will be limited to some finite set of discrete values.*
 
-The confusion matrix indicated that the dataset is unbalanced and directed to choose an appropiate best metric indicator. 
+The confusion matrix indicated that the dataset is unbalanced and directed to choose an appropriate best metric indicator. 
 
 | |Tested Negative|Tested Positive|
 |-|-|-|
 |Tested Negative|451|49|
 |Tested Positive|116|152|
 
-Based on this results and the nature of the dataset, it was decided o use area unde the curve primary metrics to obtain the most accurate results, One of the benefits of utilizing areas under the curve is that they remain the same whether the data is balanced or not.
+Based on this result and the nature of the dataset, it was decided to use area under the curve primary metrics to obtain the most accurate results, one of the benefits of utilizing areas under the curve is that they remain the same whether the data is balanced or not.
 
 The first execution of the automl model the settings chosen were to use a classification model with a timeout of 60 minutes and max concurrency 5 running jobs. The primary metric for evaluation was AUC_weighted chosen due to the imbalanced dataset and the potential of getting high error rate on the accuracy metric.   
 
-List of parameter used for the AutoML config
+List of parameters used for the AutoML config
 
 |Parameter|Value|Rationale|
 |-|-|-|
@@ -122,7 +122,7 @@ Parameters used for the automl run, code:
 |                             **automl_settings|
 |                            )|
 
-*Note*: For this particular excercise I also executed another automl experiment with the featurization switch set to off, results were the same however took some extra time to complete, this was somehow expected due to having a clean dataset. This can be found in the otherRuns folder, filename: AutoMLnoFeat.ipynb notebook
+*Note*: For this particular exercise I also executed another automl experiment with the featurization switch set to off, results were the same however took some extra time to complete, this was somehow expected due to having a clean dataset. This can be found in the otherRuns folder, filename: AutoMLnoFeat.ipynb notebook
 
 
 ### Results
@@ -211,7 +211,7 @@ VotingClassifier best algorithm used in the best model
 
 In order to validate the results of the previous AutoML experiment run and to select the best model, I decided to run two more experiments using hyperdrive. The first experiment (part 1) uses Parameter Sampling and the second one Grid Sampling (part 2)
 
-The model funtion is defined in the train.py esklearn estimator script and it is based in a logistic regresion:
+The model function is defined in the train.py esklearn estimator script and it is based in a logistic regression:
 
 model = LogisticRegression(C=args.C, max_iter=args.max_iter).fit(x_train, y_train)
 
@@ -234,7 +234,7 @@ ps = RandomParameterSampling ( {"--max_iter":choice(100,500,1000),"--C":choice(0
 And a termination **bandit policy** defined as follow:
 policy = BanditPolicy(slack_factor=0.30,evaluation_interval=1,delay_evaluation=5) 
 
-Runs to be be terminated where Bandit rule not met. i.e. If slack factor 30% on every fifth execution then terminate. (30% was use based on the output of the first experimental run)
+Runs to be terminated where Bandit rule not met. i.e. If slack factor 30% on every fifth execution then terminate. (30% was use based on the output of the first experimental run)
 
 ### Parameter Sampling (part 1):
 
@@ -316,11 +316,10 @@ The results of these executions were far less from the results of automl votingc
 
 ## Future Improvements for the project:
 
-The following list of items could possibly improve the model outcome.
-- Prevent over fitting by using more trainning data and the use of fewer features
-- Prevent target leakage and simplity the model.
-- Run a Bayesian sampling to confirm hyperdrive results
-- Develop a more fit for purpose scoring function in the tran.py to train and score the model. (Adjust the function parameters)
+**Prevent Overfitting** which could occur when the model learns the noise from the training data and it negatively impacts the performance of the model on new data. So, in order to prevent this, we have a couple of options use less features and use more training data.
+
+**Look for the better hyper-parameters**
+Test more and different hyper-parameters, expand the grid search and look for better scores and metrics. This search will take time, but it can improve the results.
 
 
 ## AutomML Best Model Registration & Deployment
@@ -381,7 +380,7 @@ https://youtu.be/RnX0XOyPqrU
 
 
 ## Standout Suggestions
-Options attempted and succesfully immplemented were to enable logging and ONNX model conversion. 
+Options attempted and successfully implemented were to enable logging and ONNX model conversion. 
 
 
 |Standout Suggestion |Results & Screenshots|
@@ -391,7 +390,7 @@ Options attempted and succesfully immplemented were to enable logging and ONNX m
 
 #### Enable Logging
 
-For a web service to have the loggin enable is required to execute the code below:
+For a web service to have the logging enable is required to execute the code below:
 
 |Code Lines| 
 |-|  
@@ -407,7 +406,7 @@ Then run the following code snippet
 
 |Code Lines| 
 |-|  
-|from azureml.automl.runtime.onnx_convert import OnnxConverter|
+|from AzureML.automl.runtime.onnx_convert import OnnxConverter|
 ||
 |best_run, onnx_mdl = remote_run.get_output(return_onnx_model=True)|
 ||
