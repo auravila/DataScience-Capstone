@@ -170,7 +170,6 @@ VotingClassifier best algorithm used in the best model
 ![](Screenshots\20-AutoMLBestRun.png)
 
 
-
 ****** This feature was enabled later in order to convert and register the model as onnx
 
 ## Hyperparameter Tuning
@@ -192,10 +191,10 @@ where the parameters for the search space are represented as
 
 Choice: Function to generate a discrete set of values
 
-The experiments were executed with the following combinations of parameters:
-ps = RandomParameterSampling ( {"--max_iter":choice(30,50,100),"--C":choice(0.5,1,1.5)} )
-ps = RandomParameterSampling ( {"--max_iter":choice(30,150,300),"--C":choice(0.5,1,1.5)} )
-ps = RandomParameterSampling ( {"--max_iter":choice(100,500,1000),"--C":choice(0.5,1,1.5,2.0,2.5)} )
+The experiments were executed with the following combinations of parameters:  
+ps = RandomParameterSampling ( {"--max_iter":choice(30,50,100),"--C":choice(0.5,1,1.5)} ) 
+ps = RandomParameterSampling ( {"--max_iter":choice(30,150,300),"--C":choice(0.5,1,1.5)} ) 
+ps = RandomParameterSampling ( {"--max_iter":choice(100,500,1000),"--C":choice(0.5,1,1.5,2.0,2.5)} )  
 
 And a termination **bandit policy** defined as follow:
 policy = BanditPolicy(slack_factor=0.30,evaluation_interval=1,delay_evaluation=5) 
@@ -204,9 +203,21 @@ Runs to be be terminated where Bandit rule not met. i.e. If slack factor 30% on 
 
 ### Parameter Sampling (part 1):
 
-In order to select which is the best model for deployment, I decided to run a parameter sampling configuration hyperdrive over the AUC_weighted metric. Then used two parameters, one for max interactions and other for the regularization strength as input for a logistic regression in order to train the model.
+Experiment Configuration:
 
-Hyperdrive was configured to run with a max concurrent run of five and over one hundred total runs bounded by a bandit policy to check for thirty percent slack on every fifth execution. (30% was use based on the output of the first experimental run)
+est = SKLearn (source_directory = "./",   
+               entry_script = 'train.py',  
+               compute_target = MYcompute_cluster)  
+
+hyperdrive_config = HyperDriveConfig (   
+    estimator=est,  
+    hyperparameter_sampling=ps,  
+    policy=policy,  
+    primary_metric_name=primary_metric_name,  
+    primary_metric_goal=primary_metric_goal,  
+    max_total_runs=100,  
+    max_concurrent_runs=5) 
+
 
 Details of the execution can be found listed in the notebook https://github.com/auravila/DataScience-Capstone/blob/main/hyperparameter_tuning-pimadiabetes.ipynb
 
@@ -219,17 +230,6 @@ Details of the execution can be found listed in the notebook https://github.com/
 |RunDetails: Parameters| ![](/Screenshots/24-HD3.png)|
 |Best Run Id| ![](/Screenshots/24-HD4.png)|
 
-### Parameter Sampling Run
-
-
-### Parameter Sampling RunDetails Progress
-
-
-
-
-![](Screenshots\24-HD3.png)
-
-![](Screenshots\24-HD4.png)
 
 ### Grid Sampling (part 2):
 
@@ -341,32 +341,15 @@ In order to query the endpoint
 1. Prepared a set of data as inputs and converted them into json format
 2. Raised a request to the endpoint scoring uri with the following parameters: resp = requests.post(scoring_uri, input_data, headers=headers)
 
-#### Registration and Deployment Model - Automl: "automlpimadiabetes:3"
 
-![](Screenshots\21-AutoMLBestmodel.png)
-
-
-#### Deployment
-
-![](Screenshots\22-AutoMLBestModelDep.png)
-
-
-#### Active Endpoint
-
-![](Screenshots\7.1-ModelEndpointActive.png)
-
-#### Endpoint Call
-![](Screenshots\7.2-ModelEndpointRestCall.png)
-
-#### Scoring File
-
-![](Screenshots\18-ModelDeploymentScoringpy.png)
-
-#### Environment File
-
-bestmodel.download_file('outputs/conda_env_v_1_0_0.yml', 'myenv.yml')  
-
-![](Screenshots\23-MyEnvyml.png)
+|Model Deployment|Results & Screenshots|
+|-|-|
+|AutoML Registration and Deployment model: **"automlpimadiabetes:3"** | ![](/Screenshots/21-AutoMLBestmodel.png) |
+|Model Deployment| ![](/Screenshots/22-AutoMLBestModelDep.png)|
+|Active Endpoint| ![](/Screenshots/7.1-ModelEndpointActive.png)|
+|Endpoint Call| ![](/Screenshots/7.2-ModelEndpointRestCall.png)|
+|Model Scoring py| ![](/Screenshots/18-ModelDeploymentScoringpy.png)|
+|Environment File bestmodel.download_file('outputs/conda_env_v_1_0_0.yml', 'myenv.yml')| ![](/Screenshots/23-MyEnvyml.png)|
 
 
 ## Screen Recording
