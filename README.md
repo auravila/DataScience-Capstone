@@ -192,6 +192,16 @@ where the parameters for the search space are represented as
 
 Choice: Function to generate a discrete set of values
 
+The experiments were executed with the following combinations of parameters:
+ps = RandomParameterSampling ( {"--max_iter":choice(30,50,100),"--C":choice(0.5,1,1.5)} )
+ps = RandomParameterSampling ( {"--max_iter":choice(30,150,300),"--C":choice(0.5,1,1.5)} )
+ps = RandomParameterSampling ( {"--max_iter":choice(100,500,1000),"--C":choice(0.5,1,1.5,2.0,2.5)} )
+
+And a termination **bandit policy** defined as follow:
+policy = BanditPolicy(slack_factor=0.30,evaluation_interval=1,delay_evaluation=5) 
+
+Runs to be be terminated where Bandit rule not met. i.e. If slack factor 30% on every fifth execution then terminate. (30% was use based on the output of the first experimental run)
+
 ### Parameter Sampling (part 1):
 
 In order to select which is the best model for deployment, I decided to run a parameter sampling configuration hyperdrive over the AUC_weighted metric. Then used two parameters, one for max interactions and other for the regularization strength as input for a logistic regression in order to train the model.
@@ -199,6 +209,27 @@ In order to select which is the best model for deployment, I decided to run a pa
 Hyperdrive was configured to run with a max concurrent run of five and over one hundred total runs bounded by a bandit policy to check for thirty percent slack on every fifth execution. (30% was use based on the output of the first experimental run)
 
 Details of the execution can be found listed in the notebook https://github.com/auravila/DataScience-Capstone/blob/main/hyperparameter_tuning-pimadiabetes.ipynb
+
+|Parameter Sampling|Results & Screenshots|
+|-|-|
+|Parameter Sampling Run| ![](/Screenshots/5-BestRunHyperPSampv1.png) |
+|RunDetails| ![](/Screenshots/12-RunDetailsParamSamp.png)|
+|RunDetails: Primary Metric| ![](/Screenshots/24-HD1.png)|
+|AUC_weighted| ![](/Screenshots/24-HD2.png)|
+|RunDetails: Parameters| ![](/Screenshots/24-HD3.png)|
+|Best Run Id| ![](/Screenshots/24-HD4.png)|
+
+### Parameter Sampling Run
+
+
+### Parameter Sampling RunDetails Progress
+
+
+
+
+![](Screenshots\24-HD3.png)
+
+![](Screenshots\24-HD4.png)
 
 ### Grid Sampling (part 2):
 
@@ -249,23 +280,7 @@ by the train.py logfiles. Increasing the iterations helped to provide the best r
 
 The results of these executions were far less from the results of automl votingclassified metrics therefore automl experiment was chosen as the best model for deployment.
 
-### Parameter Sampling Run
 
-
-![](Screenshots\5-BestRunHyperPSampv1.png)
-
-### Parameter Sampling RunDetails Progress
-
-
-![](Screenshots\12-RunDetailsParamSamp.png)
-
-![](Screenshots\24-HD1.png)
-
-![](Screenshots\24-HD2.png)
-
-![](Screenshots\24-HD3.png)
-
-![](Screenshots\24-HD4.png)
 
 
 
