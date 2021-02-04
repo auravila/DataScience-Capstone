@@ -139,38 +139,44 @@ Whilst AUC_weighted was considered as one of the best measurements the result of
 
 #### AutoML Parameters
 
-![](Screenshots\19-FittedModel.png)
-
 Parameters used by AutoML execution:
-                                                                                                    n_estimators=10,
-                                                                                                    n_jobs=1,
-                                                                                                    oob_score=False,
-                                                                                                    random_state=None,
-                                                                                                    verbose=0,
-                                                                                                    warm_start=False))],
-                                                                     verbose=False))],
-                                               flatten_transform=None,
-                                               weights=[0.06666666666666667,
-                                                        0.06666666666666667,
-                                                        0.06666666666666667,
-                                                        0.13333333333333333,
-                                                        0.06666666666666667,
-                                                        0.06666666666666667,
-                                                        0.13333333333333333,
-                                                        0.13333333333333333,
-                                                        0.13333333333333333,
-                                                        0.13333333333333333]))],
-         verbose=False)
-Y_transformer(['LabelEncoder', LabelEncoder()])
+
+datatransformer  
+{'enable_dnn': None,   
+ 'enable_feature_sweeping': None,   
+ 'feature_sweeping_config': None,   
+ 'feature_sweeping_timeout': None,   
+ 'featurization_config': None,   
+ 'force_text_dnn': None,   
+ 'is_cross_validation': None,   
+ 'is_onnx_compatible': None,   
+ 'logger': None,   
+ 'observer': None,   
+ 'task': None,   
+ 'working_dir': None}  
+
+prefittedsoftvotingclassifier
+{'estimators': ['1', '3', '21', '2', '32', '15', '26', '33', '4', '18', '10'],   
+ 'weights': [0.2857142857142857,   
+             0.07142857142857142,   
+             0.07142857142857142,   
+             0.07142857142857142,   
+             0.07142857142857142,   
+             0.07142857142857142,  
+             0.07142857142857142,   
+             0.07142857142857142,   
+             0.07142857142857142,   
+             0.07142857142857142,   
+             0.07142857142857142]}  
 
 
 #### AutoML Best Model
 VotingClassifier best algorithm used in the best model
 
-![](Screenshots\20-AutoMLBestRun.png)
+|Parameter Sampling|Results & Screenshots|
+|-|-|
+|AutoML Best Run| ![](/Screenshots/20-AutoMLBestRun.png) |
 
-
-****** This feature was enabled later in order to convert and register the model as onnx
 
 ## Hyperparameter Tuning
 
