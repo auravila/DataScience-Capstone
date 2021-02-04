@@ -306,27 +306,6 @@ The following list of items could possibly improve the model outcome.
 - Develop a more fit for purpose scoring function in the tran.py to train and score the model. (Adjust the function parameters)
 
 
-## Model Deployment
-
-
-## HyperDrive Model Registration (Parameter Sampling Run): "ParamSambestmodel.pkl:5" - Not the best model!
-
-The execution results of Grid Sampling and Parameter sampling returned as similar outcome so for this project the parameter sampling
-was chosen in order to register the model.
-model = best_run.register_model(model_name='ParamSampbestmodel.pkl', model_path='.',
-tags={'area': "diabetes", 'type': "Classification"},
-description= "Best Model using Hyperdrive Parameter Sampling"
-)
-
-print ('Model Name',model.name)
-print ('Model Version',model.version)
-print ('Model Tags',model.tags) 
-print ('Model Description', model.description)
-model.properties
-
-
-![](Screenshots\10-HyperDriveBestModel.png)
-
 ## AutomML Best Model Registration & Deployment
 
 Steps take to deploy the model:
@@ -352,12 +331,28 @@ In order to query the endpoint
 |Environment File bestmodel.download_file('outputs/conda_env_v_1_0_0.yml', 'myenv.yml')| ![](/Screenshots/23-MyEnvyml.png)|
 
 
+#### HyperDrive Model Registration (Parameter Sampling Run): "ParamSambestmodel.pkl:5" 
+
+The execution results of Grid Sampling and Parameter sampling returned a similar outcome so for this project the parameter sampling
+was chosen in order to register the model.
+
+model = best_run.register_model(model_name='ParamSampbestmodel.pkl', model_path='.',  
+tags={'area': "diabetes", 'type': "Classification"},   
+description= "Best Model using Hyperdrive Parameter Sampling"  
+)   
+ 
+|Model Registration|Results & Screenshots|
+|-|-|
+|Hyperdrive Model Registration : **"ParamSambestmodel.pkl:5** | ![](/Screenshots/10-HyperDriveBestModel.png) |
+
+
+
 ## Screen Recording
 https://youtu.be/RnX0XOyPqrU
 
 
 ## Standout Suggestions
-Other Option attempted and succesfully immplemented were to enable logging and ONNX model conversion. 
+Options attempted and succesfully immplemented were to enable logging and ONNX model conversion. 
 
 
 |Standout Suggestion |Results & Screenshots|
