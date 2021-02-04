@@ -69,7 +69,9 @@ ds = TabularDatasetFactory.from_delimited_files(path=URL)|
 
 ## Automated ML
 
-In this project an initial AutoML experiment was built with the aid of ML Studio in order to obtain some preliminary metrics especially and dataset analysis mainly to obtain a view on the confusion matrix for the target variable.
+In this project an initial AutoML experiment was built with the aid of ML Studio in order to obtain some preliminary metrics. And to obtain a view on the confusion matrix for the target variable. For this experiment a classification model was selected sice it fits properly to predict small set of values.
+
+* **Classification:** A model that generates output that will be limited to some finite set of discrete values.*
 
 The confusion matrix indicated that the dataset is unbalanced and directed to choose an appropiate best metric indicator. 
 
@@ -78,8 +80,7 @@ The confusion matrix indicated that the dataset is unbalanced and directed to ch
 |Tested Negative|451|49|
 |Tested Positive|116|152|
 
-Based on this results and the nature of the dataset, it was decided o use area unde the curve primary metrics to obtain the most accurate results. One of the benefits of utilizing areas under the curve is that they remain the same whether the data is balanced or not.
-
+Based on this results and the nature of the dataset, it was decided o use area unde the curve primary metrics to obtain the most accurate results, One of the benefits of utilizing areas under the curve is that they remain the same whether the data is balanced or not.
 
 The first execution of the automl model the settings chosen were to use a classification model with a timeout of 60 minutes and max concurrency 5 running jobs. The primary metric for evaluation was AUC_weighted chosen due to the imbalanced dataset and the potential of getting high error rate on the accuracy metric.   
 
@@ -179,6 +180,8 @@ In order to validate the results of the previous AutoML experiment run and to se
 The model funtion is defined in the train.py esklearn estimator script and it is based in a logistic regresion:
 
 model = LogisticRegression(C=args.C, max_iter=args.max_iter).fit(x_train, y_train)
+
+**Logistic Regression** *is a Machine Learning classification algorithm that is used to predict the probability of a variable. In logistic regression, the variable is a binary variable that contains data coded as 1 or 0. For this use case (tested_positive,tested_negative)*
 
 where the parameters for the search space are represented as
 
