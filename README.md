@@ -301,7 +301,7 @@ hyperdrive_config = HyperDriveConfig (
 |Run Details| ![](/Screenshots/28-HDGMet.png)|
 |Best Run Details| ![](/Screenshots/29-HDGDetails.png)|
 
-### Hyperdrive Result Comparisson
+### Result 
 
 |Standout Suggestion |Parameter Sampling|Grid Sampling| 
 |-|-|-|
@@ -311,7 +311,7 @@ hyperdrive_config = HyperDriveConfig (
 
 Both hyperdrive runs provided a similar result
 
-The results of these executions were far less from the results of automl votingclassified metrics therefore automl experiment was chosen as the best model for deployment.
+*The results of these executions were far less accurate from the results of automl votingclassified metrics therefore **automl experiment was chosen as the best model** for deployment.*
 
 
 ## Future Improvements for the project:
