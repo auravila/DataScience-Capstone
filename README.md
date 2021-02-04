@@ -41,7 +41,7 @@ The variables use is explained below:
 |BMI|Body mass index (weight in kg/ (height in m) ^2)|Numeric|248|32.0|7.9|
 |DiabetesPedigreeFunction|Diabetes pedigree function (a function which scores likelihood of diabetes based on family history)|Numeric|517|0.5|0.3|
 |Age| Age (years)|Numeric |52|33.2|11.8|
-|Outcome| Class variable (0 or 1)|Numeric |2|||
+|Outcome| Class variable (0 or 1)|Numeric |2|Values casted to text|N/A|
   
 
 |Total Sample Records|768|
@@ -174,9 +174,20 @@ VotingClassifier best algorithm used in the best model
 
 ## Hyperparameter Tuning
 
-In order to validate the results of the previous AutoML experiment run and to select a best model, I decided to run two more experiments using hyperdrive. The first experiment (part 1) using Parameter Sampling and Grid Sampling (part 2)
+In order to validate the results of the previous AutoML experiment run and to select the best model, I decided to run two more experiments using hyperdrive. The first experiment (part 1) uses Parameter Sampling and the second one Grid Sampling (part 2)
 
-The scoring funtion in the train.py esklearn estimator script
+The model funtion is defined in the train.py esklearn estimator script and it is based in a logistic regresion:
+
+model = LogisticRegression(C=args.C, max_iter=args.max_iter).fit(x_train, y_train)
+
+where the parameters for the search space are represented as
+
+|Parameter|Description|Parameter Expression|
+|-|-|-|
+|C|Regularization Strength|Choice|
+|Max Iter|maximum number of iterations using max_iter parameter, where we typically increase when we have a very large amount of train data|Choice|
+
+Choice: Function to generate a discrete set of values
 
 ### Parameter Sampling (part 1):
 
