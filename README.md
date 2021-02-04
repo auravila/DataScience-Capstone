@@ -265,7 +265,6 @@ Details of the execution can be found listed in the notebook https://github.com/
 |RunDetails: Parameters| ![](/Screenshots/24-HD3.png)|
 |Best Run Id| ![](/Screenshots/24-HD4.png)|
 
-
 ### Grid Sampling (part 2):
 
 In order to validate the results of the parameter sampling best metric performance, I decided to run a grid sampling configuration hyperdrive over the AUC_weighted metric with the same combination of the two parameters and same configuration
@@ -299,6 +298,8 @@ hyperdrive_config = HyperDriveConfig (
 |-|-|
 |Best Run | ![](/Screenshots/6-BestRunHyperGSampv1.png) |
 |Run Details| ![](/Screenshots/13-RunDetailsGridSamp.png)|
+|Run Details| ![](/Screenshots/28-HDGMet.png)|
+|Best Run Details| ![](/Screenshots/29-HDGDetails.png)|
 
 ### Hyperdrive Result Comparisson
 
@@ -306,7 +307,7 @@ hyperdrive_config = HyperDriveConfig (
 |-|-|-|
 |Best Run Id|HD_3ab2f6ca-c0b2-4906-b3cd-63d96f91146c_1|HD_32d38e02-bbeb-4725-9506-304cb2847450_6|
 |AUC_weighted|{'AUC_weighted': 0.7138211382113822}|AUC_weighted: {'AUC_weighted': 0.7138211382113822}|
-|Learning Rate|['--C', '1.5', '--max_iter', '30']|['--max_iter', '30', '--C', '1.5']|
+|Learning Rate| Learning rate: ['--C', '2.5', '--max_iter', '100']|Learning rate: ['--max_iter', '100', '--C', '2.5']|
 
 Both hyperdrive runs provided a similar result
 
