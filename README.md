@@ -334,8 +334,20 @@ Steps take to deploy the model:
 
 In order to query the endpoint
 
-1. Prepared a set of data as inputs and converted them into json format
-2. Raised a request to the endpoint scoring uri with the following parameters: resp = requests.post(scoring_uri, input_data, headers=headers)
+1. Obtain the Scoring URI
+    service = Webservice(workspace=ws, name='pimadiabetesendpv3').   
+    print(service.scoring_uri).   
+    scoring_uri = service.scoring_uri.  
+2. Prepared a set of data as inputs and converted them into json format
+   2.1 In order to easily do this open the swagger link created when registering the endpoint, for this case an in bold:
+
+|Endpoint Swagger URL|Data|
+|-|-|
+|http://159a4ac6-4925-4238-bd97-dbe0430d3a97.australiaeast.azurecontainer.io/swagger.json|**{"data": [{"preg": 0, "plas": 0, "pres": 0, "skin": 0, "insu": 0, "mass": 0.0, "pedi": 0.0, "age": 0}]}}**|
+
+
+   
+3. Raised a request to the endpoint scoring uri with the following parameters: resp = requests.post(scoring_uri, input_data, headers=headers)
 
 
 |Model Deployment|Results & Screenshots|
