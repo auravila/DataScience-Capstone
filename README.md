@@ -198,9 +198,9 @@ where the parameters for the search space are represented as
 Choice: Function to generate a discrete set of values
 
 The experiments were executed with the following combinations of parameters:  
-ps = RandomParameterSampling ( {"--max_iter":choice(30,50,100),"--C":choice(0.5,1,1.5)} ) 
-ps = RandomParameterSampling ( {"--max_iter":choice(30,150,300),"--C":choice(0.5,1,1.5)} ) 
-ps = RandomParameterSampling ( {"--max_iter":choice(100,500,1000),"--C":choice(0.5,1,1.5,2.0,2.5)} )  
+ps = RandomParameterSampling ( {"--max_iter":choice(30,50,100),"--C":choice(0.5,1,1.5)} )    
+ps = RandomParameterSampling ( {"--max_iter":choice(30,150,300),"--C":choice(0.5,1,1.5)} )     
+ps = RandomParameterSampling ( {"--max_iter":choice(100,500,1000),"--C":choice(0.5,1,1.5,2.0,2.5)} )      
 
 And a termination **bandit policy** defined as follow:
 policy = BanditPolicy(slack_factor=0.30,evaluation_interval=1,delay_evaluation=5) 
@@ -239,74 +239,55 @@ Details of the execution can be found listed in the notebook https://github.com/
 
 ### Grid Sampling (part 2):
 
-In order to validate the results of the parameter sampling best metric performance, I decided to run a grid sampling configuration hyperdrive over the AUC_weighted metric with the same two parameters, one for max interactions and other for the regularization strength as input for a logistic regression in order to train the model.
-
-Hyperdrive was configured to run with a max concurrent run of five and over one hundred total runs bounded by a bandit policy to check for thirty percent slack on every fifth execution.
+In order to validate the results of the parameter sampling best metric performance, I decided to run a grid sampling configuration hyperdrive over the AUC_weighted metric with the same combination of the two parameters and same configuration
 
 Details of the execution can be found listed in the notebook https://github.com/auravila/DataScience-Capstone/blob/main/hyperparameter_tuning-GSamp-pimadiabetes.ipynb
 
-### Results
+ps = GridParameterSampling ( {"--max_iter":choice(30,50,100),"--C":choice(0.5,1,1.5)} ).   
+ps = GridParameterSampling ( {"--max_iter":choice(30,150,100),"--C":choice(0.5,1,1.5)} ).  
+ps = GridParameterSampling ( {"--max_iter":choice(100,500,1000),"--C":choice(0.5,1,1.5,2.0,2.5)} )    
 
-For the parameter sampling best run measure using the AUC_weighted metric a value of 0.71 was obtained
+primary_metric_name = "AUC_weighted". 
+primary_metric_goal = PrimaryMetricGoal.MAXIMIZE 
 
-Best run id: HD_3ab2f6ca-c0b2-4906-b3cd-63d96f91146c_1
+policy = BanditPolicy(slack_factor=0.30,evaluation_interval=1,delay_evaluation=5)  
 
-################################
+est = SKLearn (source_directory = "./",    
+               entry_script = 'train.py',   
+               compute_target = MYcompute_cluster)  
 
- AUC_weighted: {'AUC_weighted': 0.7138211382113822}
-
-################################
-
- Learning rate: ['--C', '1.5', '--max_iter', '30']
-
-################################
-{'_aml_system_ComputeTargetStatus': '{"AllocationState":"steady","PreparingNodeCount":0,"RunningNodeCount":0,"CurrentNodeCount":0}'}
-
-
-#### To validate these results a hyperdrive using grid sampling was also executed which lead to the same results.
-
-
-Best run id: HD_32d38e02-bbeb-4725-9506-304cb2847450_6
-
-################################
-
- AUC_weighted: {'AUC_weighted': 0.7138211382113822}
-
-################################
-
- Learning rate: ['--max_iter', '30', '--C', '1.5']
-
-################################
-
-{'_aml_system_ComputeTargetStatus': '{"AllocationState":"steady","PreparingNodeCount":0,"RunningNodeCount":5,"CurrentNodeCount":5}'}
+hyperdrive_config = HyperDriveConfig (     
+    estimator=est,    
+    hyperparameter_sampling=ps,    
+    policy=policy,    
+    primary_metric_name=primary_metric_name,    
+    primary_metric_goal=primary_metric_goal,    
+    max_total_runs=100,   
+    max_concurrent_runs=5).  
 
 
-It is also worth noting that some changes we added to the max iteration parameters since the runs were to small and a message of non-convergence was being raised
-by the train.py logfiles. Increasing the iterations helped to provide the best run maximized value. Iterations were increase from 100 to 150 and to 300.
+|Grid Sampling Run |Results & Screenshots|
+|-|-|
+|Best Run | ![](/Screenshots/6-BestRunHyperGSampv1.png) |
+|Run Details| ![](/Screenshots/13-RunDetailsGridSamp.png)|
+
+### Hyperdrive Result Comparisson
+
+|Standout Suggestion |Parameter Sampling|Grid Sampling| 
+|-|-|-|
+|Best Run Id|HD_3ab2f6ca-c0b2-4906-b3cd-63d96f91146c_1|HD_32d38e02-bbeb-4725-9506-304cb2847450_6|
+|AUC_weighted|{'AUC_weighted': 0.7138211382113822}|AUC_weighted: {'AUC_weighted': 0.7138211382113822}|
+|Learning Rate|['--C', '1.5', '--max_iter', '30']|['--max_iter', '30', '--C', '1.5']|
+
+Both hyperdrive runs provided a similar result
 
 The results of these executions were far less from the results of automl votingclassified metrics therefore automl experiment was chosen as the best model for deployment.
 
 
-
-
-
-
-### Grid Sampling Run
-
-
-![](Screenshots\6-BestRunHyperGSampv1.png)
-
-
-### Grid Sampling RunDetails Progress
-
-
-![](Screenshots\13-RunDetailsGridSamp.png)
-
-
-#### Future Improvements for the project:
+## Future Improvements for the project:
 
 The following list of items could possibly improve the model outcome.
-- Prevent over fitting by using more trainning date and the use of fewer features
+- Prevent over fitting by using more trainning data and the use of fewer features
 - Prevent target leakage and simplity the model.
 - Run a Bayesian sampling to confirm hyperdrive results
 - Develop a more fit for purpose scoring function in the tran.py to train and score the model. (Adjust the function parameters)
