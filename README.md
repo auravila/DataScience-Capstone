@@ -1,4 +1,3 @@
-
 # Diabetes Classification Project
 
 The following capstone project will showcase many of the key concepts learned through the Machine Learning Engineer with Microsoft Azure Udacity course.
@@ -6,13 +5,22 @@ The following capstone project will showcase many of the key concepts learned th
 The aim of the project is to provide a walkthrough via Jupyter notebooks and screenshots on the use of concepts such as datasets, Azureml model training, Azureml SDK, AutoML, Hyperdrive tunning and machine learning operations in order to build an end to end solution capable of predicting the probability of diabetes testing for a sample population and based on a finite set of measurements.
 
 ## Project Set Up and Installation
-SDK version 1.20 version required 
+
+The list of steps below are required in order to execute the AutoML project which includes the best model and webservice deployment.
+
+
+||Dependencies Setup and Installation|
+|---|---|
+|1|Create a compute Instance in AzureML|
+|2|Download project files from current repository and Upload Jupyter Notebook to AzureML - File:DataScience-Capstone/automl-pimadiabetes.ipynb |
+|3|Upgrade SDK version 1.20|
+|4|Install azureml-sklearn|
+|5|Run Notebook|
+
 
 ## Dataset
 
 ### Overview
-
-#### Summary:
 
 The dataset was obtained from https://datahub.io/machine-learning/diabetes#readme but this dataset is originally from the National Institute of Diabetes and Digestive and Kidney Diseases. 
 
@@ -22,23 +30,23 @@ All patients from the sample are females of Pima Indian heritage (Group of Nativ
 
 The variables use is explained below:
 
-*Pregnancies: Number of times pregnant
 
-*Glucose: Plasma glucose concentration 2 hours in an oral glucose tolerance test
+|Variable|Description|Data type| Unique Value| Mean | Standard Dev|
+|---|---|--|--|--|--|
+|Pregnancies| Number of times pregnant|Numeric|17|3.8|3.4|
+|Plasma glucose concentration|2 hours in an oral glucose tolerance test|Numeric|136|120.9|32|
+|Blood Pressure|Diastolic blood pressure (mm Hg)|Numeric|47|69.1|19.4|
+|Skin Thickness|Triceps skin fold thickness (mm)|Numeric|51|20.5|16.0|
+|Insulin|2-Hour serum insulin (mu U/ml)|Numeric|186|79.8|115.2|
+|BMI|Body mass index (weight in kg/ (height in m) ^2)|Numeric|248|32.0|7.9|
+|DiabetesPedigreeFunction|Diabetes pedigree function (a function which scores likelihood of diabetes based on family history)|Numeric|517|0.5|0.3|
+|Age| Age (years)|Numeric |52|33.2|11.8|
+|Outcome| Class variable (0 or 1)|Numeric |2|Values casted to text|N/A|
+  
 
-*Blood Pressure: Diastolic blood pressure (mm Hg)
+|Total Sample Records|768|
+|-|-|
 
-*Skin Thickness: Triceps skin fold thickness (mm)
-
-*Insulin: 2-Hour serum insulin (mu U/ml)
-
-*BMI: Body mass index (weight in kg/ (height in m) ^2)
-
-*DiabetesPedigreeFunction: Diabetes pedigree function (a function which scores likelihood of diabetes based on family history)
-
-*Age: Age (years)
-
-*Outcome: Class variable (0 or 1)
 
 ### Task
 Use the list of measurements (attributes) from the tabular dataset to predict the class variable outcome value of 0 or 1 (tested negative / tested positive) this will indicate if a patient has a probability of developing diabetes.
@@ -46,216 +54,273 @@ Use the list of measurements (attributes) from the tabular dataset to predict th
 ### Access
 The dataset is referenced multiple times during the project. 
 
-####    Manually loaded via AzureML Interface
-Initial upload of data, this is done manually using the AzureML Studio GUI
+|References|Screenshot|
+|-|-|
+|Tabular dataset manual upload using AzureML Studio| ![](/Screenshots/14-DatasetManual.png) |
+|Via python train.py using SDK call| ![](/Screenshots/15-DatasetTrain.png)|
+|Via Jupyter notebooks and SDK call| ![](/Screenshots/16-DatasetSDK.png)|
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/14-DatasetManual.png)
+|Code Lines| 
+|-|
+|URL = 'https://datahub.io/machine-learning/diabetes/r/diabetes.csv'  
+ds = TabularDatasetFactory.from_delimited_files(path=URL)|  
 
-####    As training input for Hyperdrive train.py
-Reference via python train.py using SDK
-
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/15-DatasetTrain.png)
-
-####    Via SDK calls on Notebooks
-References by the Jupyter notebooks and SDK
-
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/16-DatasetSDK.png)
 
 
 ## Automated ML
-For the first execution of the automl model the settings chosen were to use a classification model with a timeout of 60 minutes and max concurrency 5 running jobs. The primary metric for evaluation was AUC_weighted chosen due to the imbalanced dataset and the potential of getting high error rate on the accuracy metric.   
 
-One of the benefits of utilizing areas under the curve is that they remain the same whether the data is balanced or not.
+In this project an initial AutoML experiment was built with the aid of ML Studio in order to obtain some preliminary metrics. And to obtain a view on the confusion matrix for the target variable. For this experiment a classification model was selected sice it fits properly to predict small set of values.
+
+* **Classification:** A model that generates output that will be limited to some finite set of discrete values.*
+
+The confusion matrix indicated that the dataset is unbalanced and directed to choose an appropiate best metric indicator. 
+
+| |Tested Negative|Tested Positive|
+|-|-|-|
+|Tested Negative|451|49|
+|Tested Positive|116|152|
+
+Based on this results and the nature of the dataset, it was decided o use area unde the curve primary metrics to obtain the most accurate results, One of the benefits of utilizing areas under the curve is that they remain the same whether the data is balanced or not.
+
+The first execution of the automl model the settings chosen were to use a classification model with a timeout of 60 minutes and max concurrency 5 running jobs. The primary metric for evaluation was AUC_weighted chosen due to the imbalanced dataset and the potential of getting high error rate on the accuracy metric.   
+
+List of parameter used for the AutoML config
+
+|Parameter|Value|Rationale|
+|-|-|-|
+|Experiment Timeout Minutes|60|Maximum time in minutes that each iteration can run for before it terminates|
+|Max_Concurrent_iterations|5|Represents the maximum number of iterations, on a cluster the sum of the max_concurrent_iterations values for all experiments should be less than or equal to the maximum number of nodes.|
+|Primary Metric|AUC_Weighted|The metric that Automated Machine Learning will optimize for model selection.|
+|compute_target|compute_target|The Azure Machine Learning compute target to run the experiment|
+|task|classification|This is the nature of the problem to solve|
+|label_column_name|dataset|The name of the label column.|
+|path|project_folder|path to the Azure Machine Learning project folder|
+|enable_early_stopping|True|Default behaviour, early stopping window starts on the 21st iteration and looks for early_stopping_n_iters iterations|
+|enable_onnx_compatible_models|True|enable or disable enforcing the ONNX-compatible models. **Enabled for ONNX deployment step**|
+|featurization|auto|Automated machine learning featurization steps (feature normalization, handling missing data, converting text to numeric, etc.)|
+|debug_log|automl_error.log|log file to write debug information to|
+
+
+Parameters used for the automl run, code:
+
+|Code Lines| 
+|-|  
+|automl_settings = {|
+|    "experiment_timeout_minutes": 60,|
+|    "max_concurrent_iterations": 5,|
+|    "primary_metric" : 'AUC_weighted'|
+|}|
+|automl_config = AutoMLConfig(compute_target=compute_target,|
+|                             task = "classification",|
+|                             training_data=dataset,|
+|                             label_column_name="class",|   
+|                             path = project_folder,|
+|                             enable_early_stopping= True,|
+|                             enable_onnx_compatible_models=True, ******|
+|                             featurization= 'auto',|
+|                             debug_log = "automl_errors.log",|
+|                             **automl_settings|
+|                            )|
+
+*Note*: For this particular excercise I also executed another automl experiment with the featurization switch set to off, results were the same however took some extra time to complete, this was somehow expected due to having a clean dataset. This can be found in the otherRuns folder, filename: AutoMLnoFeat.ipynb notebook
+
 
 ### Results
 Whilst AUC_weighted was considered as one of the best measurements the result of the execution of automl model indicated that AUC_micro provided the best run metric of them all. 
 
-Parameters used for the automl run.
 
-automl_settings = {
-    "experiment_timeout_minutes": 60,
-    "max_concurrent_iterations": 5,
-    "primary_metric" : 'AUC_weighted'
-}
-automl_config = AutoMLConfig(compute_target=compute_target,
-                             task = "classification",
-                             training_data=dataset,
-                             label_column_name="class",   
-                             path = project_folder,
-                             enable_early_stopping= True,
-                             enable_onnx_compatible_models=True, ******
-                             featurization= 'auto',
-                             debug_log = "automl_errors.log",
-                             **automl_settings
-                            )
-
-Automl RunDetails
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/1-automlrundetails.png)
-
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/25-AM.png)
-
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/26-AM.png)
-
-Automl Metrics
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/1.1-automlmetrics.png)
+|AutoML|Results & Screenshots|
+|-|-|
+|Automl RunDetails Results| ![](/Screenshots/1-automlrundetails.png) |
+|RunDetails: Best Algorithm and metric score| ![](/Screenshots/25-AM.png)|
+|RunDetails: Primary Metric| ![](/Screenshots/26-AM.png)|
+|AutoMl Experiment Metrics| ![](/Screenshots/1.1-automlmetrics.png)|
 
 
 #### AutoML Parameters
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/19-FittedModel.png)
-
 Parameters used by AutoML execution:
-                                                                                                    n_estimators=10,
-                                                                                                    n_jobs=1,
-                                                                                                    oob_score=False,
-                                                                                                    random_state=None,
-                                                                                                    verbose=0,
-                                                                                                    warm_start=False))],
-                                                                     verbose=False))],
-                                               flatten_transform=None,
-                                               weights=[0.06666666666666667,
-                                                        0.06666666666666667,
-                                                        0.06666666666666667,
-                                                        0.13333333333333333,
-                                                        0.06666666666666667,
-                                                        0.06666666666666667,
-                                                        0.13333333333333333,
-                                                        0.13333333333333333,
-                                                        0.13333333333333333,
-                                                        0.13333333333333333]))],
-         verbose=False)
-Y_transformer(['LabelEncoder', LabelEncoder()])
 
+datatransformer  
+{'enable_dnn': None,   
+ 'enable_feature_sweeping': None,   
+ 'feature_sweeping_config': None,   
+ 'feature_sweeping_timeout': None,   
+ 'featurization_config': None,   
+ 'force_text_dnn': None,   
+ 'is_cross_validation': None,   
+ 'is_onnx_compatible': None,   
+ 'logger': None,   
+ 'observer': None,   
+ 'task': None,   
+ 'working_dir': None}  
+
+prefittedsoftvotingclassifier
+{'estimators': ['1', '3', '21', '2', '32', '15', '26', '33', '4', '18', '10'],   
+ 'weights': [0.2857142857142857,   
+             0.07142857142857142,   
+             0.07142857142857142,   
+             0.07142857142857142,   
+             0.07142857142857142,   
+             0.07142857142857142,  
+             0.07142857142857142,   
+             0.07142857142857142,   
+             0.07142857142857142,   
+             0.07142857142857142,   
+             0.07142857142857142]}  
+
+1 - maxabsscaler.  
+{'copy': True}.  
+
+1 - xgboostclassifier.  
+{'base_score': 0.5,   
+ 'booster': 'gbtree',   
+ 'colsample_bylevel': 1,   
+ 'colsample_bynode': 1,   
+ 'colsample_bytree': 1,   
+ 'gamma': 0,   
+ 'learning_rate': 0.1,   
+ 'max_delta_step': 0,   
+ 'max_depth': 3,   
+ 'min_child_weight': 1,   
+ 'missing': nan,   
+ 'n_estimators': 100,   
+ 'n_jobs': 1,  
+ 'nthread': None,   
+ 'objective': 'binary:logistic',   
+ 'random_state': 0,   
+ 'reg_alpha': 0,   
+ 'reg_lambda': 1,   
+ 'scale_pos_weight': 1,  
+ 'seed': None,   
+ 'silent': None,  
+ 'subsample': 1,  
+ 'tree_method': 'auto',   
+ 'verbose': -10,   
+ 'verbosity': 0}.   
 
 #### AutoML Best Model
 VotingClassifier best algorithm used in the best model
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/20-AutoMLBestRun.png)
+|Parameter Sampling|Results & Screenshots|
+|-|-|
+|AutoML Best Run| ![](/Screenshots/20-AutoMLBestRun.png) |
 
-
-
-****** This feature was enabled later in order to convert and register the model as onnx
 
 ## Hyperparameter Tuning
 
-### Part 1:
-In order to select which is the best model for deployment, I decided to run a parameter sampling configuration hyperdrive over the AUC_weighted metric. Then used two parameters, one for max interactions and other for the regularization strength as input for a logistic regression in order to train the model.
+In order to validate the results of the previous AutoML experiment run and to select the best model, I decided to run two more experiments using hyperdrive. The first experiment (part 1) uses Parameter Sampling and the second one Grid Sampling (part 2)
 
-Hyperdrive was configured to run with a max concurrent run of five and over one hundred total runs bounded by a bandit policy to check for thirty percent slack on every fifth execution. (30% was use based on the output of the first experimental run)
+The model funtion is defined in the train.py esklearn estimator script and it is based in a logistic regresion:
+
+model = LogisticRegression(C=args.C, max_iter=args.max_iter).fit(x_train, y_train)
+
+**Logistic Regression** *is a Machine Learning classification algorithm that is used to predict the probability of a variable. In logistic regression, the variable is a binary variable that contains data coded as 1 or 0. For this use case (tested_positive,tested_negative)*
+
+where the parameters for the search space are represented as
+
+|Parameter|Description|Parameter Expression|
+|-|-|-|
+|C|Regularization Strength|Choice|
+|Max Iter|maximum number of iterations using max_iter parameter, where we typically increase when we have a very large amount of train data|Choice|
+
+Choice: Function to generate a discrete set of values
+
+The experiments were executed with the following combinations of parameters:  
+ps = RandomParameterSampling ( {"--max_iter":choice(30,50,100),"--C":choice(0.5,1,1.5)} )    
+ps = RandomParameterSampling ( {"--max_iter":choice(30,150,300),"--C":choice(0.5,1,1.5)} )     
+ps = RandomParameterSampling ( {"--max_iter":choice(100,500,1000),"--C":choice(0.5,1,1.5,2.0,2.5)} )      
+
+And a termination **bandit policy** defined as follow:
+policy = BanditPolicy(slack_factor=0.30,evaluation_interval=1,delay_evaluation=5) 
+
+Runs to be be terminated where Bandit rule not met. i.e. If slack factor 30% on every fifth execution then terminate. (30% was use based on the output of the first experimental run)
+
+### Parameter Sampling (part 1):
+
+Experiment Configuration:
+
+est = SKLearn (source_directory = "./",   
+               entry_script = 'train.py',  
+               compute_target = MYcompute_cluster)  
+
+hyperdrive_config = HyperDriveConfig (   
+    estimator=est,  
+    hyperparameter_sampling=ps,  
+    policy=policy,  
+    primary_metric_name=primary_metric_name,  
+    primary_metric_goal=primary_metric_goal,  
+    max_total_runs=100,  
+    max_concurrent_runs=5) 
+
 
 Details of the execution can be found listed in the notebook https://github.com/auravila/DataScience-Capstone/blob/main/hyperparameter_tuning-pimadiabetes.ipynb
 
-### Part 2:
+|Parameter Sampling|Results & Screenshots|
+|-|-|
+|Parameter Sampling Run| ![](/Screenshots/5-BestRunHyperPSampv1.png) |
+|RunDetails| ![](/Screenshots/12-RunDetailsParamSamp.png)|
+|RunDetails: Primary Metric| ![](/Screenshots/24-HD1.png)|
+|AUC_weighted| ![](/Screenshots/24-HD2.png)|
+|RunDetails: Parameters| ![](/Screenshots/24-HD3.png)|
+|Best Run Id| ![](/Screenshots/24-HD4.png)|
 
-In order to validate the results of the parameter sampling best metric performance, I decided to run a grid sampling configuration hyperdrive over the AUC_weighted metric with the same two parameters, one for max interactions and other for the regularization strength as input for a logistic regression in order to train the model.
 
-Hyperdrive was configured to run with a max concurrent run of five and over one hundred total runs bounded by a bandit policy to check for thirty percent slack on every fifth execution.
+### Grid Sampling (part 2):
+
+In order to validate the results of the parameter sampling best metric performance, I decided to run a grid sampling configuration hyperdrive over the AUC_weighted metric with the same combination of the two parameters and same configuration
 
 Details of the execution can be found listed in the notebook https://github.com/auravila/DataScience-Capstone/blob/main/hyperparameter_tuning-GSamp-pimadiabetes.ipynb
 
-### Results
+ps = GridParameterSampling ( {"--max_iter":choice(30,50,100),"--C":choice(0.5,1,1.5)} ).   
+ps = GridParameterSampling ( {"--max_iter":choice(30,150,100),"--C":choice(0.5,1,1.5)} ).  
+ps = GridParameterSampling ( {"--max_iter":choice(100,500,1000),"--C":choice(0.5,1,1.5,2.0,2.5)} )    
 
-For the parameter sampling best run measure using the AUC_weighted metric a value of 0.71 was obtained
+primary_metric_name = "AUC_weighted". 
+primary_metric_goal = PrimaryMetricGoal.MAXIMIZE 
 
-Best run id: HD_3ab2f6ca-c0b2-4906-b3cd-63d96f91146c_1
+policy = BanditPolicy(slack_factor=0.30,evaluation_interval=1,delay_evaluation=5)  
 
-################################
+est = SKLearn (source_directory = "./",    
+               entry_script = 'train.py',   
+               compute_target = MYcompute_cluster)  
 
- AUC_weighted: {'AUC_weighted': 0.7138211382113822}
-
-################################
-
- Learning rate: ['--C', '1.5', '--max_iter', '30']
-
-################################
-{'_aml_system_ComputeTargetStatus': '{"AllocationState":"steady","PreparingNodeCount":0,"RunningNodeCount":0,"CurrentNodeCount":0}'}
-
-
-#### To validate these results a hyperdrive using grid sampling was also executed which lead to the same results.
-
-
-Best run id: HD_32d38e02-bbeb-4725-9506-304cb2847450_6
-
-################################
-
- AUC_weighted: {'AUC_weighted': 0.7138211382113822}
-
-################################
-
- Learning rate: ['--max_iter', '30', '--C', '1.5']
-
-################################
-
-{'_aml_system_ComputeTargetStatus': '{"AllocationState":"steady","PreparingNodeCount":0,"RunningNodeCount":5,"CurrentNodeCount":5}'}
+hyperdrive_config = HyperDriveConfig (     
+    estimator=est,    
+    hyperparameter_sampling=ps,    
+    policy=policy,    
+    primary_metric_name=primary_metric_name,    
+    primary_metric_goal=primary_metric_goal,    
+    max_total_runs=100,   
+    max_concurrent_runs=5).  
 
 
-It is also worth noting that some changes we added to the max iteration parameters since the runs were to small and a message of non-convergence was being raised
-by the train.py logfiles. Increasing the iterations helped to provide the best run maximized value. Iterations were increase from 100 to 150 and to 300.
+|Grid Sampling Run |Results & Screenshots|
+|-|-|
+|Best Run | ![](/Screenshots/6-BestRunHyperGSampv1.png) |
+|Run Details| ![](/Screenshots/13-RunDetailsGridSamp.png)|
+
+### Hyperdrive Result Comparisson
+
+|Standout Suggestion |Parameter Sampling|Grid Sampling| 
+|-|-|-|
+|Best Run Id|HD_3ab2f6ca-c0b2-4906-b3cd-63d96f91146c_1|HD_32d38e02-bbeb-4725-9506-304cb2847450_6|
+|AUC_weighted|{'AUC_weighted': 0.7138211382113822}|AUC_weighted: {'AUC_weighted': 0.7138211382113822}|
+|Learning Rate|['--C', '1.5', '--max_iter', '30']|['--max_iter', '30', '--C', '1.5']|
+
+Both hyperdrive runs provided a similar result
 
 The results of these executions were far less from the results of automl votingclassified metrics therefore automl experiment was chosen as the best model for deployment.
 
-### Parameter Sampling Run
 
-
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/5-BestRunHyperPSampv1.png)
-
-### Parameter Sampling RunDetails Progress
-
-
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/12-RunDetailsParamSamp.png)
-
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/24-HD1.png)
-
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/24-HD2.png)
-
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/24-HD3.png)
-
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/24-HD4.png)
-
-
-
-
-### Grid Sampling Run
-
-
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/6-BestRunHyperGSampv1.png)
-
-
-### Grid Sampling RunDetails Progress
-
-
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/13-RunDetailsGridSamp.png)
-
-
-#### Future Improvements for the project:
+## Future Improvements for the project:
 
 The following list of items could possibly improve the model outcome.
-- Prevent over fitting by using more trainning date and the use of fewer features
+- Prevent over fitting by using more trainning data and the use of fewer features
 - Prevent target leakage and simplity the model.
 - Run a Bayesian sampling to confirm hyperdrive results
 - Develop a more fit for purpose scoring function in the tran.py to train and score the model. (Adjust the function parameters)
 
-
-## Model Deployment
-
-
-## HyperDrive Model Registration (Parameter Sampling Run): "ParamSambestmodel.pkl:5" - Not the best model!
-
-The execution results of Grid Sampling and Parameter sampling returned as similar outcome so for this project the parameter sampling
-was chosen in order to register the model.
-model = best_run.register_model(model_name='ParamSampbestmodel.pkl', model_path='.',
-tags={'area': "diabetes", 'type': "Classification"},
-description= "Best Model using Hyperdrive Parameter Sampling"
-)
-
-print ('Model Name',model.name)
-print ('Model Version',model.version)
-print ('Model Tags',model.tags) 
-print ('Model Description', model.description)
-model.properties
-
-
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/10-HyperDriveBestModel.png)
 
 ## AutomML Best Model Registration & Deployment
 
@@ -271,50 +336,73 @@ In order to query the endpoint
 1. Prepared a set of data as inputs and converted them into json format
 2. Raised a request to the endpoint scoring uri with the following parameters: resp = requests.post(scoring_uri, input_data, headers=headers)
 
-#### Registration and Deployment Model - Automl: "automlpimadiabetes:3"
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/21-AutoMLBestmodel.png)
+|Model Deployment|Results & Screenshots|
+|-|-|
+|AutoML Registration and Deployment model: **"automlpimadiabetes:3"** | ![](/Screenshots/21-AutoMLBestmodel.png) |
+|Model Deployment| ![](/Screenshots/22-AutoMLBestModelDep.png)|
+|Active Endpoint| ![](/Screenshots/7.1-ModelEndpointActive.png)|
+|Endpoint Call| ![](/Screenshots/7.2-ModelEndpointRestCall.png)|
+|Model Scoring py| ![](/Screenshots/18-ModelDeploymentScoringpy.png)|
+|Environment File bestmodel.download_file('outputs/conda_env_v_1_0_0.yml', 'myenv.yml')| ![](/Screenshots/23-MyEnvyml.png)|
 
 
-#### Deployment
+#### HyperDrive Model Registration (Parameter Sampling Run): "ParamSambestmodel.pkl:5" 
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/22-AutoMLBestModelDep.png)
+The execution results of Grid Sampling and Parameter sampling returned a similar outcome so for this project the parameter sampling
+was chosen in order to register the model.
 
+model = best_run.register_model(model_name='ParamSampbestmodel.pkl', model_path='.',  
+tags={'area': "diabetes", 'type': "Classification"},   
+description= "Best Model using Hyperdrive Parameter Sampling"  
+)   
+ 
+|Model Registration|Results & Screenshots|
+|-|-|
+|Hyperdrive Model Registration : **"ParamSambestmodel.pkl:5** | ![](/Screenshots/10-HyperDriveBestModel.png) |
 
-#### Active Endpoint
-
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/7.1-ModelEndpointActive.png)
-
-#### Endpoint Call
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/7.2-ModelEndpointRestCall.png)
-
-#### Scoring File
-
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/18-ModelDeploymentScoringpy.png)
-
-#### Environment File
-
-bestmodel.download_file('outputs/conda_env_v_1_0_0.yml', 'myenv.yml')  
-
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/23-MyEnvyml.png)
 
 
 ## Screen Recording
-https://youtu.be/8W8EHRs3HdI
+https://youtu.be/RnX0XOyPqrU
+
 
 ## Standout Suggestions
-Other Option attempted was to enable logging and ONNX conversion. Both of these were implemented succesfully
-
-## Enable Logging
-
-In order to enable logging, enable_app_insights to the web service were enabled to true. service.update(enable_app_insights=True)
-
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/8-LoggingEnabled.png)
-
-## ONNX Conversion
-
-ONNX model conversion required to rerun the Automl experiment configuration setting to enable the compatibility mode to true.
-enable_onnx_compatible_models=True, ******
+Options attempted and succesfully immplemented were to enable logging and ONNX model conversion. 
 
 
-![](https://github.com/auravila/DataScience-Capstone/blob/main/Screenshots/9-ONNXModelConversion.png)
+|Standout Suggestion |Results & Screenshots|
+|-|-|
+|Enable Logging | ![](/Screenshots/8-LoggingEnabled.png) |
+|ONNX Conversion| ![](/Screenshots/9-ONNXModelConversion.png)|
+
+#### Enable Logging
+
+For a web service to have the loggin enable is required to execute the code below:
+
+|Code Lines| 
+|-|  
+|service.update(enable_app_insights=True)|
+
+
+#### ONNX Conversion
+
+For a model to be registered and converted to ONNX, the AutoML configuration setting of the experiment needs to be enabled as follow.
+enable_onnx_compatible_models=True
+
+Then run the following code snippet
+
+|Code Lines| 
+|-|  
+|from azureml.automl.runtime.onnx_convert import OnnxConverter|
+||
+|best_run, onnx_mdl = remote_run.get_output(return_onnx_model=True)|
+||
+|onnx_fl_path = "./best_model.onnx"|
+|OnnxConverter.save_onnx_model(onnx_mdl, onnx_fl_path)|
+||
+|model = Model.register(model_path = "./",|
+|                       model_name = "best_model.onnx",|
+|                       tags = {"onnx": "MyFirstonnx"},|
+|                       description = "pimadiabetesonnx",|
+|                       workspace = ws)|
